@@ -1,4 +1,4 @@
-# Scala Cobol Parser
+# Scala Cobol Interpreter
 ## Summary
 This is a fixed length streaming file parser written in Scala which supports reading some of COBOL's more funky features, namely switch based schemas, occurrence blocks, and any combination between the two.
 This parser features two DSLs, one for reading and one for writing, which are simple to grasp and use.
