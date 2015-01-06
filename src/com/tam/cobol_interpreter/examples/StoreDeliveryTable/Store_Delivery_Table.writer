@@ -19,7 +19,14 @@ Date Non-Empty
 # The Delivery_CD, although it was part of the Occurs group, can be outputted apart
 Delivery_CD
 
-# Here, we've omitted the CapturedSwitchValue just to show that
-# A) You don't have to write all the captured columns.
-# B) What it would look like to output the captured switch value
-# CapturedSwitchValue
+# CapturedSwitchValue | RowSwitch
+# Here, we're commenting out the CapturedSwitchValue and the RowSwitch just to show that
+# A) You don't have to output all the captured columns.
+# B) RowSwitch is still available to you
+
+# In this case, RowSwitch will equal CapturedSwitchValue, but only when they are both R.
+# RowSwitch can be T, but CapturedSwitchValue is not set when RowSwitch is T.
+
+# CapturedSwitchValue can be made to have a value for every row by either making it Persist, or Non-Empty,
+#   or naively changing the "Case T | Filler 1" expressions to "Case T | CapturedSwitchValue Char 1",
+

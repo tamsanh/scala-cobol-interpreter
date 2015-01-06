@@ -2,7 +2,7 @@ Store_Delivery_Table
 
 # This parser will parse a hypothetical table containing delivery data for a set of stores
 
-Switch RowType Char 1
+Switch RowSwitch Char 1
 
     # Switches don't consume the bytes used to switch; they are passed to each of their cases.
     # This data can be ignored or captured, as seen in respective cases
