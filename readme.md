@@ -4,7 +4,11 @@ This is a fixed length streaming file parser written in Scala which supports rea
 This parser features two DSLs, one for reading and one for writing, which are simple to grasp and use.
 
 ## DSL
-The first DSL is for parsing. The convention is that file names may be suffixed with .parser
+The two DSLs share some commonality.
+
+* The first is that line terminators are both '\\n' and '|'.
+    The '|' is useful when you want to associate several fields or expressions together, like a Case and its Switch capture column, or a group of fields within an Occurs block.
+* The second is that comments go on their own lines, and start with '\#'
 
 ### Parser DSL
 Everything parsed is represented as a char/byte array. Integers are transformed into their string representations. This, when output, the writer doesn't actually see a single integer to write, but instead a char array containing all the digits of the integer.
@@ -19,9 +23,7 @@ Not all parts of the parser DSL are represented by discrete keywords, as you can
     [Column Name] [Column Type] [Byte Number]
         The column pattern is your basic pattern that represents a column that will be parsed.
         The byte number represents how many bytes will be consumed by this column.
-        Repetition is allowed in Column Name space. This will come in handy with Expressions in Occurs blocks
         Column Types: Int, Char, Comp3, Fill
-            See Column Types for more detail
 
     Switch [Switch Column Name] [Switch Value Type] [Switch Bytes]
     Case [Case Value]
@@ -43,33 +45,34 @@ Not all parts of the parser DSL are represented by discrete keywords, as you can
         The final byte value. This must be equal to the sum of bytes for each possible branch.
         It will dictate how many bytes are read from the original file, per run through the schema.
 
-#### Column Types
+#### Columns
+Columns are the basic building block, and will be used throughout the schema. Repetition is allowed in Column Name space; data is not overwritten but appended to, and is all accessible by the Writer later on.
+
+##### Column Types
 These column types determine specifically how to parse the bytes, and minimal formatting. All the final values are represented as characters in an array. For example, the number 42 is represented as Array(34, 32), where 34 and 32 are the respective character codes for '4' and '2'
 
-##### Integer
-Int type will strip off any prefixed 0s
+###### Integer
+Int type will strip off any prefixed 0s, as well as prefix a '-' when appropriate
 
     Int: An integer type.
-            It will consume however many bytes, and spit out a properly formatted integer
+        It will consume however many bytes, and spit out a properly formatted integer
 
-##### Char
-The rawest form; does not transform the bytes
+###### Char
+The rawest form; does not transform the bytes.
 
     Char: The raw character type.
-            Reads whatever bytes it encounters. This is the rawest form of parsing that's offered
+        Reads whatever bytes it encounters.
 
-##### Comp3
+###### Comp3
 This will decompress the comp3 bytes and then represent it as an integer.
 
     Comp3: COBOL's compressed integer type.
             This will read the compressed bytes and decompress for later representation.
 
-##### Fill
-Highly recommended that you use the Filler expression instead of manually specifying a Fill Column Type
+###### Fill
+Highly recommended that you use the Filler expression instead of manually specifying a Fill Column Type. Data in this type will not be saved, only ignored and skipped over.
 
     Fill: The filler type.
-            Data in this type will not be saved, only ignored and skipped over.
-            Use the Filler type instead, which is more efficient with its ignoring.
 
 #### Switches/Cases
 Switches and Cases are the most complicated part of the parser grammar. For every row of bytes encountered, Switches will parse their designated data, and attempt match that value to one of the cases. It is important to note that the value matching is done by first parsing the switch value using whatever type it holds, and then parsing the value for each associated case using the Char type.
@@ -95,7 +98,13 @@ The writer DSL is much easier to parse, as it only contains 1 type of expression
 #### Expression
 The only expression is the Column Name, plus two possible options. The order of the column names matters, as it will be the final output order of the data.
 
-    [Column Name] (Persistent|Non-Empty):Optional
+    [Column Name] (Persistent|Persist|Non-Empty|NonEmpty):Optional
+
+##### Persistent
+Persistent carries column data over, and doesn't reset it when a new row is read from the parser. This is useful if you have a field that only shows up occasionally, but you want its data to be associated with all the other ones.
+
+##### Non-Empty
+The row will only be written of the field labeled as Non-Empty is not empty. This is helpful when you have a Switch Case that you don't want to write out, but still want to parse and persist. Just label a field in the other switch case as needing to be non-empty before you write.
 
 #### Occurs Note and Rectangularization
 Any columns in an Occurs block will likely have slightly more data than other expressions. What the writer will do is, for any Column that contains less data than any other Column, it will extend the shorter column to match the size of the longer one. For example, for a given cobol byte set, if there is only 1 field designating a store code and 1 field designating a store date, but 3 fields designating 3 delivery times for that single day, the writer will multiply those single fields to match the length of the delivery times field, and then writer 3 separate rows where all of the values of the Store code and Date are the same, but the 3 delivery times are different. Refer to the examples for a more concrete example of this.
@@ -106,7 +115,8 @@ A StoreDeliveryTable example can be found in src/com/tam/cobol_interpreter/examp
 The StoreDeliveryTable is a hypothetical situation in which you are given a cobol stream containing information about stores, their thrice-a-day deliveries, and the items in each of the respective deliveries.
 The DSL files are commented, and should properly explain how each of the expressions in the language are used. It also offers stylistic ideas for writing the various schema files.
 
-## Todo
+
+##### Todo
 In somewhat of a descending priority order. (Except testing)
 
 * Warnings for unused data.
