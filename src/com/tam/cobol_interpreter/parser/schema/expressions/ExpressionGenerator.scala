@@ -74,7 +74,13 @@ object ExpressionGenerator {
     }
 
     def generateExpressionTree(schemaString: String): Array[ParserSchemaExpression] = {
-      val schemaLines = schemaString.trim().split(Array('\n','|'))
+      //TODO: Consolidate this duplicated function
+      val schemaLines = schemaString.trim().
+        split('\n').
+        filter({case CommentMatcher() => false case _ => true}).mkString("\n").
+        split('|').
+        filter({case CommentMatcher() => false case _ => true}).mkString("|").
+        split(Array('|','\n'))
 
       val (tableName, schemaLinesTableCut) = getTableName(schemaLines)
 
