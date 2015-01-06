@@ -51,10 +51,10 @@ Not all parts of the parser DSL are represented by discrete keywords, as you can
         It will dictate how many bytes are read from the original file.
 
 #### Columns
-Columns are the basic building block, and will be used throughout the schema. Repetition is allowed in Column Name space; data is not overwritten but appended to, and is all accessible by the Writer later on.
+`Columns` are the basic building block, and will be used throughout the schema. Repetition is allowed in `Column` Name space; data is not overwritten but appended to, and is all accessible by the Writer later on.
 
 ##### Column Types
-These column types determine specifically how to parse the bytes, and minimal formatting. All the final values are represented as characters in an array. For example, the number 42 is represented as Array(34, 32), where 34 and 32 are the respective character codes for '4' and '2'
+These column types determine specifically how to parse the bytes, and minimal formatting. All the final values are represented as characters in an array. For example, the number `42` is represented as `Array(34, 32)`, where `34` and `32` are the respective character codes for `'4'` and `'2'`
 
 ###### Integer
 Int type will strip off any prefixed 0s, as well as prefix a '-' when appropriate
@@ -76,7 +76,7 @@ This will decompress the comp3 bytes and then represent it as an integer.
         This will decompress the Comp3 compressed bytes
 
 ###### Fill
-Highly recommended that you use the Filler expression instead of manually specifying a Fill Column Type. Data in this type will not be saved, only ignored and skipped over.
+Highly recommended that you use the `Filler` expression instead of manually specifying a Fill Column Type. Data in this type will not be saved, only ignored and skipped over.
 
     Fill: The filler type.
         Use the Filler expression instead
@@ -84,7 +84,7 @@ Highly recommended that you use the Filler expression instead of manually specif
 #### Switches/Cases
 Switches and Cases are the most complicated part of the parser grammar. For every row of bytes encountered, Switches will parse their designated data, and attempt match that value to one of the cases. It is important to note that the value matching is done by first parsing the switch value using whatever type it holds, and then parsing the value for each associated case using the Char type.
 This means that values the **Switch Values will be transformed, but the Case Values will not be**.
-Here are some examples of when Switch Values equal Case Values:
+Here are some examples of when `Switch Values` equal `Case Values`:
 
     Examples of: SwitchBytes:Column Type == CaseBytes:(Always Char Type)
 
@@ -94,10 +94,10 @@ Here are some examples of when Switch Values equal Case Values:
             Hello World:Char == Hello World
             Hello World :Char != Hello World
 
-The value _ is the default matcher. Everything will equal _
-I only pray you do not have a schema that actually depends on _ as a real value
+**The value `_` is the default matcher. Everything will match `_`**
+I only pray you do not have a schema that actually depends on `'_'` as a real value
 
-As for the Expressions per case, one thing to note is that Switches **Do NOT consume bytes**. This means that you should make sure each of your cases has enough bytes in total to cover the additional Switch bytes. It also should be noted that the value parsed by the Switch will still be available to the writer under the Switch Name used.
+As for the Expressions per case, one thing to note is that Switches **Do NOT consume bytes**. This means that you should make sure each of your cases has enough bytes in total to cover the additional Switch bytes. It also should be noted that the **value parsed by the Switch will still be available to the writer under the Switch Name used**.
 
 ### Writer DSL
 The writer DSL is much easier to parse, as it only contains 1 type of expression, with 2 options.
@@ -108,13 +108,13 @@ The only expression is the Column Name, plus two possible options. The order of 
     [Column Name] (Persistent|Persist|Non-Empty|NonEmpty):Optional
 
 ##### Persistent
-Persistent carries column data over, and doesn't reset it when a new row is read from the parser. This is useful if you have a field that only shows up occasionally, but you want its data to be associated with all the other ones.
+`Persistent` carries column data over, and doesn't reset it when a new row is read from the parser. This is useful if you have a field that only shows up occasionally, but you want its data to be associated with all the other ones.
 
 ##### Non-Empty
-The row will only be written of the field labeled as Non-Empty is not empty. This is helpful when you have a Switch Case that you don't want to write out, but still want to parse and persist. Just label a field in the other switch case as needing to be non-empty before you write.
+The row will only be written of the field labeled as `Non-Empty` is not empty. This is helpful when you have a Switch Case that you don't want to write out, but still want to parse and persist. Just label a field in the other switch case as needing to be non-empty before you write. **Caution:** Other fields which you may be interested in will not be written if an empty value appears for this field. You might be able to protect that data with `persist`, but it can still be overwritten in the next set of data.
 
 #### Occurs Note and Rectangularization
-Any columns in an Occurs block will likely have slightly more data than other expressions. What the writer will do is, for any Column that contains less data than any other Column, it will extend the shorter column to match the size of the longer one. For example, for a given cobol byte set, if there is only 1 field designating a store code and 1 field designating a store date, but 3 fields designating 3 delivery times for that single day, the writer will multiply those single fields to match the length of the delivery times field, and then writer 3 separate rows where all of the values of the Store code and Date are the same, but the 3 delivery times are different. Refer to the examples for a more concrete example of this.
+Any columns in an `Occurs` block will likely have slightly more data than other expressions. What the writer will do is, for any Column that contains less data than any other Column, it will extend the shorter column to match the size of the longer one. For example, for a given cobol byte set, if there is only 1 field designating a store code and 1 field designating a store date, but 3 fields designating 3 delivery times for that single day, the writer will multiply those single fields to match the length of the delivery times field, and then writer 3 separate rows where all of the values of the Store code and Date are the same, but the 3 delivery times are different. Refer to the examples for a more concrete example of this.
 
 ## Examples
 A StoreDeliveryTable example can be found in `src/com/tam/cobol_interpreter/examples`.
