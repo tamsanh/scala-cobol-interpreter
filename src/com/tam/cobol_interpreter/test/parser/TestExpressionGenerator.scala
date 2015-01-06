@@ -24,6 +24,22 @@ class TestExpressionGenerator extends FlatSpec {
     )
   }
 
+  "ExpressionGenerator" should "be cool with pipes in comments" in {
+    ExpressionGenerator.generateExpressionTree(
+      """Test_Table
+        '# This is a comment
+        '# This is a | in a comment
+        'Field1 Int 3
+        '# THis is a nother | in a comment
+        '3""".stripMargin('\'')) should equal (
+      Array(
+        TableName("Test_Table"),
+        Column("Field1", "Int", "3"),
+        RowBytes("3")
+      )
+    )
+  }
+
   "ExpressionGenerator" should "generate occurs" in {
     ExpressionGenerator.generateExpressionTree(
       """Test_Table

@@ -24,6 +24,25 @@ class TestWriterColumnExpressionGenerator extends FlatSpec{
       )
     )
   }
+
+  "WriterColumnExpressionGenerator" should "be cool with pipes in comments" in {
+    WriterColumnExpressionGenerator.generateExpressionList(
+      """Field1
+        '# This is a comment
+        'Field2
+        '# This is a | in a comment
+        'Field3 Persistent
+        '# This is another | in a comment
+        'Field4
+      """.stripMargin('\'')) should equal (
+      Array(
+        BasicColumn("Field1"),
+        BasicColumn("Field2"),
+        PersistentColumn("Field3"),
+        BasicColumn("Field4")
+      )
+    )
+  }
   "WriterColumnExpressionGenerator" should "ignore comments" in {
     WriterColumnExpressionGenerator.generateExpressionList(
       """Field1
