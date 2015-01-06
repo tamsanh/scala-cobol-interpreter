@@ -1,0 +1,17 @@
+# A test schema file
+# Comments start with pounds
+## Layout:
+### [Table Name]
+### [Column Name] [Column Type] [Column Bytes]
+### Occurs [Count of Occurrences]
+### [Column Name] [Column Type] [Column Bytes]
+### EndOccurs
+### Switch [Column Name] [Column Type] [Column Bytes]
+### Case [Switch Value] [Column Name] [Column Type] [Column Bytes]
+### Case [Switch Value] [Column Name] [Column Type] [Column Bytes]
+### Filler [Filler Bytes]
+Test_Table
+Field1	Int	3
+Field2	Comp3	2
+Field3	Char	3
+8

@@ -1,0 +1,61 @@
+Product_CD|Product_Amt|Store_CD|Store_Name|Date|Delivery_CD
+611|13|1|"Sophie's Free \"Gym\" "|20140101|1
+883|14|1|"Sophie's Free \"Gym\" "|20140101|2
+399|15|1|"Sophie's Free \"Gym\" "|20140101|3
+1087|14|1|"Sophie's Free \"Gym\" "|20140102|1
+825|15|1|"Sophie's Free \"Gym\" "|20140102|2
+933|16|1|"Sophie's Free \"Gym\" "|20140102|3
+915|15|1|"Sophie's Free \"Gym\" "|20140103|1
+275|16|1|"Sophie's Free \"Gym\" "|20140103|2
+484|17|1|"Sophie's Free \"Gym\" "|20140103|3
+822|16|1|"Sophie's Free \"Gym\" "|20140104|1
+817|17|1|"Sophie's Free \"Gym\" "|20140104|2
+231|18|1|"Sophie's Free \"Gym\" "|20140104|3
+985|14|2|Butters' Mochi Shop |20140101|1
+572|15|2|Butters' Mochi Shop |20140101|2
+651|16|2|Butters' Mochi Shop |20140101|3
+298|15|2|Butters' Mochi Shop |20140102|1
+588|16|2|Butters' Mochi Shop |20140102|2
+471|17|2|Butters' Mochi Shop |20140102|3
+899|16|2|Butters' Mochi Shop |20140103|1
+465|17|2|Butters' Mochi Shop |20140103|2
+465|18|2|Butters' Mochi Shop |20140103|3
+798|17|2|Butters' Mochi Shop |20140104|1
+1012|18|2|Butters' Mochi Shop |20140104|2
+143|19|2|Butters' Mochi Shop |20140104|3
+141|15|3|Div n' Jared's Juice|20140101|1
+509|16|3|Div n' Jared's Juice|20140101|2
+829|17|3|Div n' Jared's Juice|20140101|3
+475|16|3|Div n' Jared's Juice|20140102|1
+837|17|3|Div n' Jared's Juice|20140102|2
+1087|18|3|Div n' Jared's Juice|20140102|3
+889|17|3|Div n' Jared's Juice|20140103|1
+322|18|3|Div n' Jared's Juice|20140103|2
+532|19|3|Div n' Jared's Juice|20140103|3
+658|18|3|Div n' Jared's Juice|20140104|1
+865|19|3|Div n' Jared's Juice|20140104|2
+237|20|3|Div n' Jared's Juice|20140104|3
+211|16|4|Gas To The Max      |20140101|1
+646|17|4|Gas To The Max      |20140101|2
+399|18|4|Gas To The Max      |20140101|3
+1051|17|4|Gas To The Max      |20140102|1
+132|18|4|Gas To The Max      |20140102|2
+1023|19|4|Gas To The Max      |20140102|3
+537|18|4|Gas To The Max      |20140103|1
+554|19|4|Gas To The Max      |20140103|2
+296|20|4|Gas To The Max      |20140103|3
+548|19|4|Gas To The Max      |20140104|1
+872|20|4|Gas To The Max      |20140104|2
+694|21|4|Gas To The Max      |20140104|3
+698|17|5|James' Japanese Tea |20140101|1
+863|18|5|James' Japanese Tea |20140101|2
+841|19|5|James' Japanese Tea |20140101|3
+109|18|5|James' Japanese Tea |20140102|1
+686|19|5|James' Japanese Tea |20140102|2
+278|20|5|James' Japanese Tea |20140102|3
+425|19|5|James' Japanese Tea |20140103|1
+545|20|5|James' Japanese Tea |20140103|2
+489|21|5|James' Japanese Tea |20140103|3
+994|20|5|James' Japanese Tea |20140104|1
+699|21|5|James' Japanese Tea |20140104|2
+1061|22|5|James' Japanese Tea |20140104|3
