@@ -6,9 +6,11 @@ This parser features two DSLs, one for reading and one for writing, which are si
 ## DSL
 The two DSLs share some commonality.
 
-* The first is that line terminators are both '\\n' and '|'.
-    The '|' is useful when you want to associate several fields or expressions together, like a Case and its Switch capture column, or a group of fields within an Occurs block.
-* The second is that comments go on their own lines, and start with '\#'
+* The first is that line terminators are both `\n` and `|`.
+    The `|` is useful when you want to associate several fields or expressions together, like a Case and its Switch capture column, or a group of fields within an Occurs block.
+* The second is that comments go on their own lines, and start with `\#`.
+
+Be sure to take a look at `src/tam/cobol_interpreter/examples` for example usage of these DSLs.
 
 ### Parser DSL
 Everything parsed is represented as a char/byte array. Integers are transformed into their string representations. This, when output, the writer doesn't actually see a single integer to write, but instead a char array containing all the digits of the integer.
@@ -21,8 +23,10 @@ Not all parts of the parser DSL are represented by discrete keywords, as you can
         This essentially does nothing but help to organize the file.
 
     [Column Name] [Column Type] [Byte Number]
-        The column pattern is your basic pattern that represents a column that will be parsed.
-        The byte number represents how many bytes will be consumed by this column.
+        The column pattern is your basic pattern
+            that represents a column that will be parsed.
+        The byte number represents how many bytes
+            will be consumed by this column.
         Column Types: Int, Char, Comp3, Fill
 
     Switch [Switch Column Name] [Switch Value Type] [Switch Bytes]
@@ -33,7 +37,7 @@ Not all parts of the parser DSL are represented by discrete keywords, as you can
         Please refer to Switches/Cases for more in depth instruction
 
     Filler [Byte Number]
-        This is a way to skip bytes in the COBOL file that have no value and are meaningless.
+        This is a way to skip bytes that have no value and are meaningless.
 
     Occurs [Occurrence Number]
         [Expressions]
@@ -42,8 +46,9 @@ Not all parts of the parser DSL are represented by discrete keywords, as you can
         Please be sure to refer to the Writer section about how Occurs are written
 
     [Total Bytes]
-        The final byte value. This must be equal to the sum of bytes for each possible branch.
-        It will dictate how many bytes are read from the original file, per run through the schema.
+        The final byte value.
+        This must be equal to the sum of bytes for each possible branch.
+        It will dictate how many bytes are read from the original file.
 
 #### Columns
 Columns are the basic building block, and will be used throughout the schema. Repetition is allowed in Column Name space; data is not overwritten but appended to, and is all accessible by the Writer later on.
@@ -55,7 +60,8 @@ These column types determine specifically how to parse the bytes, and minimal fo
 Int type will strip off any prefixed 0s, as well as prefix a '-' when appropriate
 
     Int: An integer type.
-        It will consume however many bytes, and spit out a properly formatted integer
+        It will consume however many bytes,
+        and spit out a properly formatted integer
 
 ###### Char
 The rawest form; does not transform the bytes.
@@ -67,12 +73,13 @@ The rawest form; does not transform the bytes.
 This will decompress the comp3 bytes and then represent it as an integer.
 
     Comp3: COBOL's compressed integer type.
-            This will read the compressed bytes and decompress for later representation.
+        This will decompress the Comp3 compressed bytes
 
 ###### Fill
 Highly recommended that you use the Filler expression instead of manually specifying a Fill Column Type. Data in this type will not be saved, only ignored and skipped over.
 
     Fill: The filler type.
+        Use the Filler expression instead
 
 #### Switches/Cases
 Switches and Cases are the most complicated part of the parser grammar. For every row of bytes encountered, Switches will parse their designated data, and attempt match that value to one of the cases. It is important to note that the value matching is done by first parsing the switch value using whatever type it holds, and then parsing the value for each associated case using the Char type.
@@ -134,5 +141,5 @@ In somewhat of a descending priority order. (Except testing)
     You can kind of do this now by taking advantage of Switch's non-consumption
 * Add an escape character to case
     So that those poor souls who need _ as a value can make it available
-* More testing
+* More testing  
     Overall, it's a pretty good testing set. Our coverage is around 95%, across the board (excluding some newly made classes and that examples method), but there's definitely cases I'm missing.
