@@ -1,47 +1,60 @@
 Store_Delivery_Table
-
 # This parser will parse a hypothetical table containing delivery data for a set of stores
 
-# RowSwitch is the name,
-# Char is the Type of data it will parse to match on
-# 1 is the amount of bytes to parse to check
+# This is a Switch which directs the flow of the parser
+#     RowSwitch is the name
+#     Char is the Type of data it will parse to match on
+#     1 is the amount of bytes to parse to check
 Switch RowSwitch Char 1
 
-    # Switches don't consume the bytes used to switch; they are passed to each of their cases.
-    # This data can be ignored or captured
-    # Here, the 1 byte from the switch is ignored in Filler
-    Case T | Filler 1
+    # This is a Case for the Switch
+    # If the switch ends up equalling R, then this Case block will be executed.
+    Case R | CapturedSwitchValue Char 1
+        # Switches don't consume the bytes used to switch;
+        #   they are passed to each of their cases.
+        # This data must be handled: either captured or ignored
+        # Here, the 1 byte from the switch is captured in CapturedSwitchValue
 
-        # Parse a store code, and a store name
-        Store_CD Int 4
-        Store_Name Char 20
+        # This is a basic column, comprising of the Name, Type, Bytes
+        # This will parse 8 bytes as an Integer into a Date column
+        Date Int 8
 
-        # Make sure that all cases are of equal length
-        Filler 5
+        # Occurs blocks will repeat all the expressions within the block, including switches
+        Occurs 3
+            Product_CD Comp3 3 | Product_Amt Comp3 3 | Delivery_CD Int 1
+        EndOccurs
+        # Signalling the end of an Occurs
+
+        # The | character represents a line terminator,
+        # so the previous Occurs block could as be written as
+        #
+        #    Occurs 3
+        #      Product_CD Comp3 3
+        #      Product_Amt Comp3 3
+        #      Delivery_CD Int 1
+        #    EndOccurs
+        # or
+        #    Occurs 3 | Product_CD Comp3 3 | Product_Amt Comp3 3 | Delivery_CD Int 1 | EndOccurs
+        #
 
     # Cases must always be ended
     EndCase
 
-    # Here, the 1 byte from the switch is captured in CapturedSwitchValue
-    Case R | CapturedSwitchValue Char 1
+    # If the Switch equals T
+    Case T | Filler 1
+        # In this case, the 1 byte from the switch is ignored with Filler
 
-        Date Int 8
+        # These are columns will produce exactly what they say
+        Store_CD Int 4
+        Store_Name Char 20
 
-        # Occurs will repeat all the expressions within the block, including switches
-        Occurs 3
-            Product_CD Comp3 3 | Product_Amt Comp3 3 | Delivery_CD Int 1
-        # Occurs blocks must also be ended
-        EndOccurs
-
-        # The pipe represents a line terminator, so the previous Occurs block could as be written as
-        ## Occurs 3
-        ## Product_CD Comp3 3
-        ## Product_Amt Comp3 3
-        ## Delivery_CD Int 1
-        ## EndOccurs
+        # Cases must be of equal byte length
+        # This Filler pads this Case T to equal the length of Case R
+        # These kinds of Fillers are usually explicit in original schemas
+        Filler 5
 
     EndCase
 
-# The row bytes at the end represent how much data any given branch will consume.
-# This will determine how much data the writer buffers to look at, later on.
+# The row bytes at the end represent how much data any given branch will consume
+# This will determine how much data the writer buffers will look at, later on
 30
