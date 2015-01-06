@@ -13,10 +13,10 @@ Switch RowSwitch Char 1
         # Switches don't consume the bytes used to switch;
         #   they are passed to each of their cases.
         # This data must be handled: either captured or ignored
-        # Here, the 1 byte from the switch is captured in CapturedSwitchValue
+        # Here, the 1 byte from the switch is captured in a basic field named CapturedSwitchValue
 
-        # This is a basic column, comprising of the Name, Type, Bytes
-        # This will parse 8 bytes as an Integer into a Date column
+        # This is another basic field, comprising of the Name, Type, Bytes
+        # This will parse 8 bytes as an Integer into a Date field
         Date Int 8
 
         # Occurs blocks will repeat all the expressions within the block, including switches
@@ -25,8 +25,8 @@ Switch RowSwitch Char 1
         EndOccurs
         # Signalling the end of an Occurs
 
-        # The | character represents a line terminator,
-        # so the previous Occurs block could be written as
+        # The | (pipe) character represents a line terminator
+        # Thus the previous Occurs block could be written as
         #
         #    Occurs 3
         #      Product_CD Comp3 3
@@ -37,18 +37,18 @@ Switch RowSwitch Char 1
         #    Occurs 3 | Product_CD Comp3 3 | Product_Amt Comp3 3 | Delivery_CD Int 1 | EndOccurs
         #
 
-    # Cases must always be ended
+    # Cases must always be ended after their expression sets
     EndCase
 
-    # If the Switch equals T
+    # If the Switch equals T, this Case will be chosen instead
+    # _ is the wildcard for cases
     Case T | Filler 1
         # In this case, the 1 byte from the switch is ignored with Filler
 
-        # These are columns will produce exactly what they say
+        # These two column parsers will produce exactly what they say
         Store_CD Int 4
         Store_Name Char 20
 
-        # Cases must be of equal byte length
         # This Filler pads this Case T to equal the length of Case R
         # These kinds of Fillers are usually explicit in original schemas
         Filler 5
@@ -56,5 +56,5 @@ Switch RowSwitch Char 1
     EndCase
 
 # The row bytes at the end represent how much data any given branch will consume
-# This will determine how much data the writer buffers will look at, later on
+#   This will also determine how much data the writer buffers will look at, later on
 30
