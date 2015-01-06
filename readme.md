@@ -134,6 +134,8 @@ In somewhat of a descending priority order. (Except testing)
   * Just relying on IntelliJ to build and distribute isn't going to fly for long
 * Optimizing on Singletons
   * There's a lot of unnecessary class use. Would like to reduce the memory footprint with Singletons
+* Comments can be better handled
+  * No need for a matcher class. They can just be substring/stripped out of lines
 * Writing multiple Occurs
   * Due to the nature of the shared contexts, more complex rectangularization is not yet possible. Would like it as a feature.
 * Rewind for Parser
