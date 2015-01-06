@@ -21,7 +21,7 @@ object GenerateStoreDeliveryTable {
         while(j.length < 25) j += " "
         j
       })
-    val rand = new Random()
+    val rand = new Random(0)
     for (s <- 1 to names.length) {
       fos.write(ByteArrayTool.stringToByteArray(s"T000$s${names(s - 1)}"))
       for (d <- 1 to 4) {
