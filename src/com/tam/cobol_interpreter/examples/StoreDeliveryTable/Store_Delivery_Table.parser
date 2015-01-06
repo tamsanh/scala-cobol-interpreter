@@ -26,7 +26,7 @@ Switch RowSwitch Char 1
         # Signalling the end of an Occurs
 
         # The | character represents a line terminator,
-        # so the previous Occurs block could as be written as
+        # so the previous Occurs block could be written as
         #
         #    Occurs 3
         #      Product_CD Comp3 3
