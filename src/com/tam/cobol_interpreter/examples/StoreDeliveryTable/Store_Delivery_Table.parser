@@ -2,27 +2,46 @@ Store_Delivery_Table
 
 # This parser will parse a hypothetical table containing delivery data for a set of stores
 
+# RowSwitch is the name,
+# Char is the Type of data it will parse to match on
+# 1 is the amount of bytes to parse to check
 Switch RowSwitch Char 1
 
     # Switches don't consume the bytes used to switch; they are passed to each of their cases.
-    # This data can be ignored or captured, as seen in respective cases
+    # This data can be ignored or captured
+    # Here, the 1 byte from the switch is ignored in Filler
     Case T | Filler 1
+
+        # Parse a store code, and a store name
         Store_CD Int 4
         Store_Name Char 20
 
-        # Cases should be the same length.
+        # Make sure that all cases are of equal length
         Filler 5
+
+    # Cases must always be ended
     EndCase
 
+    # Here, the 1 byte from the switch is captured in CapturedSwitchValue
     Case R | CapturedSwitchValue Char 1
+
         Date Int 8
 
-        # Occurs will repeat whatever schema it holds.
+        # Occurs will repeat all the expressions within the block, including switches
         Occurs 3
             Product_CD Comp3 3 | Product_Amt Comp3 3 | Delivery_CD Int 1
+        # Occurs blocks must also be ended
         EndOccurs
+
+        # The pipe represents a line terminator, so the previous Occurs block could as be written as
+        ## Occurs 3
+        ## Product_CD Comp3 3
+        ## Product_Amt Comp3 3
+        ## Delivery_CD Int 1
+        ## EndOccurs
+
     EndCase
 
 # The row bytes at the end represent how much data any given branch will consume.
-# This will determine
+# This will determine how much data the writer buffers to look at, later on.
 30
