@@ -8,7 +8,7 @@ The two DSLs share some commonality.
 
 * The first is that line terminators are both `\n` and `|`.
     The `|` is useful when you want to associate several fields or expressions together, like a Case and its Switch capture column, or a group of fields within an Occurs block.
-* The second is that comments go on their own lines, and start with `\#`.
+* The second is that comments go on their own lines, and start with `#`.
 
 Be sure to take a look at `src/tam/cobol_interpreter/examples` for example usage of these DSLs.
 
@@ -117,29 +117,29 @@ The row will only be written of the field labeled as Non-Empty is not empty. Thi
 Any columns in an Occurs block will likely have slightly more data than other expressions. What the writer will do is, for any Column that contains less data than any other Column, it will extend the shorter column to match the size of the longer one. For example, for a given cobol byte set, if there is only 1 field designating a store code and 1 field designating a store date, but 3 fields designating 3 delivery times for that single day, the writer will multiply those single fields to match the length of the delivery times field, and then writer 3 separate rows where all of the values of the Store code and Date are the same, but the 3 delivery times are different. Refer to the examples for a more concrete example of this.
 
 ## Examples
-A StoreDeliveryTable example can be found in src/com/tam/cobol_interpreter/examples.
+A StoreDeliveryTable example can be found in `src/com/tam/cobol_interpreter/examples`.
 ### Store Delivery Table
 The StoreDeliveryTable is a hypothetical situation in which you are given a cobol stream containing information about stores, their thrice-a-day deliveries, and the items in each of the respective deliveries.
 The DSL files are commented, and should properly explain how each of the expressions in the language are used. It also offers stylistic ideas for writing the various schema files.
 
 
-##### Todo
+## Todo
 In somewhat of a descending priority order. (Except testing)
 
 * Warnings for unused data.
-    It's a bit of a manual process, keeping the parser and writer in sync. It would be nice if the writer were to warn you of data that isn't being utilized, or for the writer to know what data will never be available.
+  * It's a bit of a manual process, keeping the parser and writer in sync. It would be nice if the writer were to warn you of data that isn't being utilized, or for the writer to know what data will never be available.
 * Cobol Output Support
-    It would be really nice to have a writer which can also write data out in Cobol.
+  * It would be really nice to have a writer which can also write data out in Cobol.
 * Proper dependency manager and builder
-    Just relying on IntelliJ to build and distribute isn't going to fly for long
+  * Just relying on IntelliJ to build and distribute isn't going to fly for long
 * Optimizing on Singletons
-    There's a lot of unnecessary class use. Would like to reduce the memory footprint with Singletons
+  * There's a lot of unnecessary class use. Would like to reduce the memory footprint with Singletons
 * Writing multiple Occurs
-    Due to the nature of the shared contexts, more complex rectangularization is not yet possible. Would like it as a feature.
+  * Due to the nature of the shared contexts, more complex rectangularization is not yet possible. Would like it as a feature.
 * Rewind for Parser
-    I like the idea of being able to re-parse bytes of data in another way.
-    You can kind of do this now by taking advantage of Switch's non-consumption
+  * I like the idea of being able to re-parse bytes of data in another way.
+  * You can kind of do this now by taking advantage of Switch's non-consumption
 * Add an escape character to case
-    So that those poor souls who need _ as a value can make it available
-* More testing  
-    Overall, it's a pretty good testing set. Our coverage is around 95%, across the board (excluding some newly made classes and that examples method), but there's definitely cases I'm missing.
+  * So that those poor souls who need _ as a value can make it available
+* More testing
+  * Overall, it's a pretty good testing set. Our coverage is around 95%, across the board (excluding some newly made classes and that examples method), but there's definitely cases missing.
