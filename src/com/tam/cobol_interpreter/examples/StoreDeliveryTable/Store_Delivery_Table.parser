@@ -13,10 +13,13 @@ Switch RowSwitch Char 1
         # Switches don't consume the bytes used to switch;
         #   they are passed to each of their cases.
         # This data must be handled: either captured or ignored
-        # Here, the 1 byte from the switch is captured in a basic field named CapturedSwitchValue
+        # In this Case, the 1 byte from the switch is captured in a Column named CapturedSwitchValue
+        # Columns comprise of a Name, Type, and Bytes
+        #   The CapturedSwitchValue will parse 1 byte as a Char
+        # The | (pipe) character is a line terminator
+        #   the Column is not being associated with Case R in any special way
 
-        # This is another basic field, comprising of the Name, Type, Bytes
-        # This will parse 8 bytes as an Integer into a Date field
+        # This is another Column which will parse 8 bytes as an Integer into a Date field
         Date Int 8
 
         # Occurs blocks will repeat all the expressions within the block, including switches
@@ -25,8 +28,8 @@ Switch RowSwitch Char 1
         EndOccurs
         # Signalling the end of an Occurs
 
-        # The | (pipe) character represents a line terminator
-        # Thus the previous Occurs block could be written as
+        # Again, the | (pipe) character represents a line terminator
+        # The previous Occurs block could be written as
         #
         #    Occurs 3
         #      Product_CD Comp3 3
@@ -41,16 +44,17 @@ Switch RowSwitch Char 1
     EndCase
 
     # If the Switch equals T, this Case will be chosen instead
-    # _ is the wildcard for cases
+    # An _ (underscore) can be used as a value for a Case to capture all other input
+    #   A default Case, for when no other cases match a switch value
     Case T | Filler 1
         # In this case, the 1 byte from the switch is ignored with Filler
 
-        # These two column parsers will produce exactly what they say
+        # These two column parsers will only populate if this case is chosen
         Store_CD Int 4
         Store_Name Char 20
 
         # This Filler pads this Case T to equal the length of Case R
-        # These kinds of Fillers are usually explicit in original schemas
+        # These kinds of Fillers are usually explicit in the original COBOL schemas
         Filler 5
 
     EndCase
