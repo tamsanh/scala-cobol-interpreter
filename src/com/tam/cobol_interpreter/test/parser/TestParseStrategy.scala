@@ -23,7 +23,7 @@ class TestParseStrategy extends FlatSpec {
   "A CharStrategy" should "parse a char as it is" in {
     val pc = new ParseContext(ParseContextResource.threeIntTwoComp3ThreeCharBytes)
     pc.skip(5) should equal (5)
-    val cs = new CharStrategy()
+    val cs = CharStrategy
     cs.parse(pc, 3) should equal ("XYZ".toCharArray)
 
     val pc2 = new ParseContext(Array(0x1F:Byte))

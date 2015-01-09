@@ -2,7 +2,7 @@ package com.tam.cobol_interpreter.parser.strategy
 
 import com.tam.cobol_interpreter.context.ParseContext
 import com.tam.cobol_interpreter.parser.exceptions.{StrategyException, IntStrategyException}
-import com.tam.cobol_interpreter.tools.Comp3Tool
+import com.tam.cobol_interpreter.tools.{ByteArrayTool, Comp3Tool}
 
 /**
  * Created by tamu on 1/1/15.
@@ -17,10 +17,12 @@ abstract class ParseStrategy {
       parseContext.getNextBytes(bytes)
     catch {
       case e:AssertionError =>
-        throw new StrategyException(s"Pointer Out of Bounds", parseContext.pointer, parseContext.getData)
+        // TODO: This is a context exception
+        throw new StrategyException(s"Pointer (${parseContext.pointer} Out of Bounds: ${ByteArrayTool.byteArrayToString(parseContext.getData)}", parseContext.getData)
       case e:Exception =>
         throw e
     }
+  def parse(byteArr: Array[Byte]):Array[Byte] = parse(byteArr, byteArr.length)
   def parse(parseContext: ParseContext, bytes: Int): Array[Byte]
 }
 
@@ -31,12 +33,12 @@ class IntStrategy extends ParseStrategy {
       toParse.map(_.toChar).mkString.toInt.toString.toCharArray.map(_.toByte).toArray
     catch {
       case e:Exception =>
-        throw new IntStrategyException(s"IntStrategyException: ${e.getMessage}", parseContext.pointer, toParse)
+        throw new IntStrategyException(s"IntStrategyException: ${e.getMessage}", toParse)
     }
   }
 }
 
-class CharStrategy extends ParseStrategy {
+object CharStrategy extends ParseStrategy{
   def parse(parseContext: ParseContext, bytes: Int): Array[Byte] = {
     getNextBytes(parseContext, bytes)
   }

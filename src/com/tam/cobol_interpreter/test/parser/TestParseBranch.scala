@@ -1,8 +1,10 @@
 package com.tam.cobol_interpreter.test.parser
 
 import com.tam.cobol_interpreter.parser.branch.ParseBranch
-import com.tam.cobol_interpreter.parser.strategy.IntStrategy
+import com.tam.cobol_interpreter.parser.exceptions.ParseNodeException
+import com.tam.cobol_interpreter.parser.strategy.{FillStrategy, IntStrategy}
 import com.tam.cobol_interpreter.test.resource.ParseContextResource
+import com.tam.cobol_interpreter.tools.ByteArrayTool
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 
@@ -29,5 +31,16 @@ class TestParseBranch extends FlatSpec {
       pb.getParseContext
     }
     thrown.getMessage should equal ("No ParseContext Set")
+  }
+
+  "ParseBranch" should "properly identify bytes which cause exceptions" in {
+    val pc = ParseContextResource.generateThreeIntTwoComp3ThreeChar()
+    val pb = new ParseBranch(pc)
+    pb.addNode("Filler", 5, new FillStrategy)
+    pb.addNode("BadInt", 3, new IntStrategy)
+    val thrown = intercept[ParseNodeException]{pb.parse()}
+    thrown.getClass.getName should equal ("com.tam.cobol_interpreter.parser.exceptions.ParseNodeException")
+    thrown.getNodeName should equal ("BadInt")
+    ByteArrayTool.byteArrayToString(thrown.getReadBytes) should equal ("Bytes(X,Y,Z)")
   }
 }

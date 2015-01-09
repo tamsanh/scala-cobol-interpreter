@@ -1,6 +1,6 @@
 package com.tam.cobol_interpreter.parser.branch
 
-import com.tam.cobol_interpreter.parser.exceptions.ParseNodeException
+import com.tam.cobol_interpreter.parser.exceptions.{StrategyException, ParseNodeException}
 import com.tam.cobol_interpreter.parser.strategy.ParseStrategy
 
 /**
@@ -17,7 +17,9 @@ class ParseNode(parseBranch: ParseBranch, name: String, bytes: Int, parseStrateg
     try
       this.data = this.parseStrategy.parse(this.parseBranch.getParseContext, this.bytes)
     catch {
-      case e:ParseNodeException => throw e
+      case e:StrategyException =>
+        throw new ParseNodeException(e.getMessage, this.name, this.parseBranch.getParseContext.pointer, e.getReadBytes)
+      case e:Exception => throw e
     }
     this.parseBranch.setData(this.name, this.data)
     this.data

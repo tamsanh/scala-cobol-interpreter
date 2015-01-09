@@ -1,7 +1,7 @@
 package com.tam.cobol_interpreter.parser.branch
 
 import com.tam.cobol_interpreter.context.{DataContext, ParseContext}
-import com.tam.cobol_interpreter.parser.exceptions.{ParseNodeException, StrategyException, IntStrategyException}
+import com.tam.cobol_interpreter.parser.exceptions.{ParseBranchException, ParseNodeException, StrategyException, IntStrategyException}
 import com.tam.cobol_interpreter.parser.strategy.ParseStrategy
 
 import scala.collection.mutable
@@ -47,9 +47,9 @@ class ParseBranch(var parseContext: Option[ParseContext]) {
       try
         node.parse()
       catch {
-        case e:StrategyException =>
-          throw new ParseNodeException(e.getMessage, node.getName, e.getPointerPosition, e.getReadBytes)
-      }
+        case e:ParseNodeException => throw e
+        case e:Exception =>
+          throw new ParseBranchException(e.getMessage, node.getName, this.getParseContext.pointer)}
     this.parsedData
   }
 }

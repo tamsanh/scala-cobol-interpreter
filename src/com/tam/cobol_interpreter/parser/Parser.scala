@@ -25,13 +25,8 @@ class Parser(schema:ParserSchema, fileToParse:InputStream) extends java.util.Ite
       parseBranch.parse()
     } catch {
       case e:ParseNodeException =>
-        val badBytePos = (e.pointerPosition - e.readBytes.length) + (totalBytesRead - parseContext.length)
-        val msg = s"Node:'${e.nodeName}' Position:$badBytePos Bytes:'${ByteArrayTool.makeString(e.readBytes)}' Msg:'${e.getMessage}'"
-        throw new ParserException(msg)
-      case e:SwitchCaseException =>
-        val badBytePos = (e.pointerPosition - e.readBytes.length) + (totalBytesRead - parseContext.length)
-        val msg = s"Node:'${e.nodeName}' Position:$badBytePos Bytes:'${ByteArrayTool.makeString(e.readBytes)}' Msg:'${e.getMessage}'"
-        throw new ParserException(msg)
+        val badBytePos = totalBytesRead - e.getReadBytes.length
+        throw new ParserException(e.getMessage, e.getNodeName, badBytePos, e.getReadBytes)
       case e:Exception => throw e
     }
   }

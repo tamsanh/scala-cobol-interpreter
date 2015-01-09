@@ -2,7 +2,7 @@ package com.tam.cobol_interpreter.test.parser
 
 import com.tam.cobol_interpreter.context.ParseContext
 import com.tam.cobol_interpreter.parser.branch.builder._
-import com.tam.cobol_interpreter.parser.exceptions.{SchemaException, SwitchCaseException}
+import com.tam.cobol_interpreter.parser.exceptions.{ParseSwitchValueException, SchemaException, SwitchCaseException}
 import com.tam.cobol_interpreter.parser.schema.expressions._
 import com.tam.cobol_interpreter.parser.schema.{ParserSchema, ParserSchemaFactory}
 import com.tam.cobol_interpreter.test.resource.ParseContextResource
@@ -108,7 +108,7 @@ class TestParserSchema extends FlatSpec {
   "ParserSchema" should "throw exceptions" in {
     val pc = ParseContextResource.generateOneThroughNineChar()
     val pbb = new StringParseBranchBuilder()
-    val thrown = intercept[SwitchCaseException]{
+    val thrown = intercept[ParseSwitchValueException]{
       ParserSchemaFactory.createSchema(
         s"""
          |Test
@@ -118,7 +118,8 @@ class TestParserSchema extends FlatSpec {
          |0
        """.stripMargin).build(pc, new StringParseBranchBuilder())
     }
-    thrown.getMessage should equal ("No Matching Case for Switch Val: 'Bytes(1)'")
+    thrown.getMessage should equal ("No Matching Case for Switch Val: '1'")
+    thrown.getNodeName should equal ("Field1")
 
     val thrown2 = intercept[SwitchCaseException] {
       ParserSchemaFactory.createSchema(
@@ -131,7 +132,7 @@ class TestParserSchema extends FlatSpec {
          |EndCase
          |0
        """.stripMargin).build(pc, pbb)}
-    thrown2.getMessage should equal ("Too Many Matching Cases for Switch Val: 'Bytes(1)'")
+    thrown2.getMessage should equal ("Multiple Case Values of: '1'")
   }
 
   "ParserSchema" should "properly combine occurs and switches" in {

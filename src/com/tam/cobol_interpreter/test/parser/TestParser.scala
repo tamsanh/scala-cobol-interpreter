@@ -1,10 +1,12 @@
 package com.tam.cobol_interpreter.test.parser
 
-import java.io.File
+import java.io.{StringBufferInputStream, File}
 
 import com.tam.cobol_interpreter.context.{ContextTool, DataContext}
+import com.tam.cobol_interpreter.parser.exceptions.{ParserException, ParseException, ParseNodeException}
 import com.tam.cobol_interpreter.parser.{ParserFactory, Parser}
-import com.tam.cobol_interpreter.test.resource.FileResources
+import com.tam.cobol_interpreter.test.resource.{ParseContextResource, FileResources}
+import com.tam.cobol_interpreter.tools.ByteArrayTool
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 
@@ -73,4 +75,27 @@ class TestParser extends FlatSpec {
     thrown.getClass should equal (new UnsupportedOperationException().getClass)
   }
 
+  "Parser" should "identify where bad characters are" in {
+    val p = ParserFactory.createParser(
+    """Filler 5
+      |BadInt Int 3
+      |8
+    """.stripMargin,
+    new StringBufferInputStream("12345XYZ")
+    )
+    val thrown = intercept[ParserException]{p.next()}
+    thrown.getBadBytePosition should equal (5)
+    thrown.getReadBytes should equal (ByteArrayTool.stringToByteArray("XYZ"))
+
+    val p2 = ParserFactory.createParser(
+      """Filler 5
+        |BadInt Int 3
+        |8
+      """.stripMargin,
+      new StringBufferInputStream("12345123123451231234512X")
+    )
+    val thrown2 = intercept[ParserException]{p2.next(); p2.next(); p2.next()}
+    thrown2.getBadBytePosition should equal (21)
+    ByteArrayTool.makeString(thrown2.getReadBytes) should equal ("12X")
+  }
 }

@@ -62,6 +62,15 @@ class TestSchemaExpressions extends FlatSpec{
     )
   }
 
+  "Switches" should "be able to retrieve a case by a byte array" in {
+    Switch(Column("one", "two", "3"), Array(
+      Case(Array('0'.toByte), Array(Column("one", "two", "3")))
+    )).casesByValue("0") should equal (
+      Case(Array('0'.toByte), Array(Column("one", "two", "3")))
+    )
+
+  }
+
   "Occurs" should "calculate a proper sum" in {
     new Occurs("3", Array(Column("one", "two", "3"))).bytes should equal (9)
   }

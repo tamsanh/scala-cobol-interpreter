@@ -14,7 +14,7 @@ object ParseStrategyFactory {
   def getStrategy(s:String): ParseStrategy = {
     s.toLowerCase match {
       case IntStrategyName => new IntStrategy
-      case CharStrategyName => new CharStrategy
+      case CharStrategyName => CharStrategy
       case Comp3StrategyName => new Comp3Strategy
       case FillStrategyName => new FillStrategy
     }

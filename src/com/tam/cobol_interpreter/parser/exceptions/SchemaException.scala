@@ -1,10 +1,13 @@
 package com.tam.cobol_interpreter.parser.exceptions
 
+import com.tam.cobol_interpreter.tools.ByteArrayTool
+
 /**
  * Created by tamu on 1/4/15.
  */
 class SchemaException(s:String) extends Exception(s){
   def this() = this("")
 }
-//TODO: Possibly reduce this duplication
-case class SwitchCaseException(s:String, pointerPosition:Int, readBytes:Array[Byte], nodeName:String) extends SchemaException(s)
+class SwitchCaseException(s:String) extends SchemaException(s)
+class MultipleCaseValues(caseValue:String) extends SwitchCaseException(s"Multiple Case Values of: '$caseValue'")
+class MultipleDefaultCases(defaultValue:String) extends SwitchCaseException(s"Multiple Default Cases. Default Value: '$defaultValue'")

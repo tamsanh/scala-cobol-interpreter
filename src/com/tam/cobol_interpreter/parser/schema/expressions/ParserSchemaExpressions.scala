@@ -1,6 +1,10 @@
 package com.tam.cobol_interpreter.parser.schema.expressions
 
+import com.tam.cobol_interpreter.parser.exceptions._
+import com.tam.cobol_interpreter.parser.strategy.CharStrategy
 import com.tam.cobol_interpreter.tools.{ArrayTool, ByteArrayTool}
+
+import scala.collection.mutable
 
 /**
  * Created by tamu on 1/3/15.
@@ -12,6 +16,7 @@ case class TableName(name: String) extends ParserSchemaExpression(0)
 case class Column(columnName:String, columnType:String, columnBytes:String) extends ParserSchemaExpression(columnBytes.toInt)
 case class Filler(fillerBytes:String) extends ParserSchemaExpression(fillerBytes.toInt)
 case class Switch(column:Column, cases:Array[Case]) extends ParserSchemaExpression(cases(0).bytes) {
+  final val defaultCaseValue = "_"
   override def equals(that:Any): Boolean = {
     that match {
       case other: Switch =>
@@ -21,6 +26,20 @@ case class Switch(column:Column, cases:Array[Case]) extends ParserSchemaExpressi
     }
   }
   override def toString:String = s"Switch($column,Cases(${cases.map(_.toString).mkString(",\n")}))"
+
+  val casesByValue = new mutable.HashMap[String, Case]()
+  for(c <- cases) {
+    //TODO: Using strings from byte arrays feels like a bad idea
+    val parsedSwitch = ByteArrayTool.makeString(CharStrategy.parse(c.switchVal))
+    if(casesByValue.contains(parsedSwitch))
+      if (parsedSwitch == defaultCaseValue)
+        throw new MultipleDefaultCases(this.defaultCaseValue)
+      else
+        throw new MultipleCaseValues(parsedSwitch)
+    else
+      casesByValue.update(parsedSwitch, c)
+  }
+  val defaultCase:Option[Case] = casesByValue.get(defaultCaseValue)
 }
 case class Case(switchVal: Array[Byte], caseExpressions: Array[ParserSchemaExpression]) extends ParserSchemaExpression(caseExpressions.map(_.bytes).sum) {
   override def equals(that:Any): Boolean = {

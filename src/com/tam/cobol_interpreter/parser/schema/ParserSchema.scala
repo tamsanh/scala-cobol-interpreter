@@ -3,7 +3,7 @@ package com.tam.cobol_interpreter.parser.schema
 import com.tam.cobol_interpreter.context.ParseContext
 import com.tam.cobol_interpreter.parser.branch.ParseBranch
 import com.tam.cobol_interpreter.parser.branch.builder.ParseBranchBuilder
-import com.tam.cobol_interpreter.parser.exceptions.{SchemaException, SwitchCaseException}
+import com.tam.cobol_interpreter.parser.exceptions._
 import com.tam.cobol_interpreter.parser.schema.expressions._
 import com.tam.cobol_interpreter.parser.strategy.ParseStrategyFactory
 import com.tam.cobol_interpreter.parser.strategy.CharStrategy
@@ -22,6 +22,7 @@ class ParserSchema(expressionList: Array[ParserSchemaExpression]){
     that match {
       case other:ParserSchema =>
         ArrayTool.deepEquals[ParserSchemaExpression](other.getExpressionList, this.getExpressionList)
+      case _:Any => false
     }
   }
 
@@ -81,29 +82,16 @@ object ParserSchema {
           val switchStrategy = ParseStrategyFactory.getStrategy(x.column.columnType)
           val switchBytes:Array[Byte] = switchStrategy.parse(parseContext, x.column.bytes)
           parseContext.rewind(x.column.bytes)
-          val charStrategy = new CharStrategy()
-          val filteredCases = x.cases.filter({k =>
-            java.util.Arrays.equals(
-              charStrategy.parse(k.switchVal, k.switchVal.length),
-              switchBytes)
-          })
           val targetCase:Case =
-            filteredCases.length match {
-              case 1 => filteredCases.head
-              case 0 =>
-                val defaultCases = x.cases.filter(_.switchVal.head == '_'.toByte)
-                defaultCases.length match {
-                  case 1 => defaultCases.head
-                  case 0 =>
-                    val msg = s"No Matching Case for Switch Val: '${ByteArrayTool.byteArrayToString(switchBytes)}'"
-                    throw new SwitchCaseException(msg, parseContext.pointer, switchBytes, x.column.columnName)
-                  case _ =>
-                    val msg = s"Multiple Default Cases for Switch ${x.column.columnName}"
-                    throw new SwitchCaseException(msg, parseContext.pointer, switchBytes, x.column.columnName)
+            x.casesByValue.get(ByteArrayTool.makeString(switchBytes)) match {
+              case Some(matchedCase) => matchedCase
+              case None =>
+                x.defaultCase match {
+                  case Some(defaultCase) => defaultCase
+                  case None =>
+                    val msg = s"No Matching Case for Switch Val: '${ByteArrayTool.makeString(switchBytes)}'"
+                    throw new ParseSwitchValueException(msg, x.column.columnName, parseContext.pointer + switchBytes.length, switchBytes)
                 }
-              case _ =>
-                val msg = s"Too Many Matching Cases for Switch Val: '${ByteArrayTool.byteArrayToString(switchBytes)}'"
-                throw new SwitchCaseException(msg, parseContext.pointer, switchBytes, x.column.columnName)
             }
           recBuild(parseContext, parseBranchBuilder, targetCase.caseExpressions)
           recBuild(parseContext, parseBranchBuilder, schemaExpressions.tail)

@@ -3,9 +3,8 @@ package com.tam.cobol_interpreter.parser.exceptions
 /**
  * Created by tamu on 1/6/15.
  */
-class StrategyException(s:String, pointerPosition:Int, readBytes:Array[Byte]) extends Exception(s) {
-  def getPointerPosition:Int = this.pointerPosition
+class StrategyException(s:String, readBytes:Array[Byte]) extends Exception(s) {
   def getReadBytes:Array[Byte] = this.readBytes
 }
-case class IntStrategyException(s:String, pointerPosition:Int, readBytes:Array[Byte]) extends
-  StrategyException(s, pointerPosition, readBytes)
+class IntStrategyException(s:String, readBytes:Array[Byte]) extends
+  StrategyException(s, readBytes)
