@@ -26,7 +26,7 @@ abstract class ParseStrategy {
   def parse(parseContext: ParseContext, bytes: Int): Array[Byte]
 }
 
-class IntStrategy extends ParseStrategy {
+object IntStrategy extends ParseStrategy {
   def parse(parseContext: ParseContext, bytes: Int): Array[Byte] = {
     val toParse = getNextBytes(parseContext, bytes)
     try
@@ -44,14 +44,14 @@ object CharStrategy extends ParseStrategy{
   }
 }
 
-class Comp3Strategy extends ParseStrategy {
+object Comp3Strategy extends ParseStrategy {
   def parse(parseContext: ParseContext, bytes: Int): Array[Byte] = {
     val toParse = getNextBytes(parseContext, bytes)
     Comp3Tool.unpack(toParse)
   }
 }
 
-class FillStrategy extends ParseStrategy {
+object FillStrategy extends ParseStrategy {
   def parse(parseContext: ParseContext, bytes: Int): Array[Byte] = {
     parseContext.getNextBytes(bytes)
     new Array[Byte](0)

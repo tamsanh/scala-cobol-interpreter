@@ -15,9 +15,9 @@ class TestParseBranch extends FlatSpec {
   "A ParseBranch" should "parse a parse context and assign the value to a DataContext" in {
     val pc = ParseContextResource.generateOneThroughNineChar()
     val pb = new ParseBranch(pc)
-    pb.addNode("Field1", 1, new IntStrategy)
-    pb.addNode("Field2", 2, new IntStrategy)
-    (4 until 10).map(k => pb.addNode("Field3", 1, new IntStrategy))
+    pb.addNode("Field1", 1, IntStrategy)
+    pb.addNode("Field2", 2, IntStrategy)
+    (4 until 10).map(k => pb.addNode("Field3", 1,  IntStrategy))
     val data = pb.parse()
 
     data("Field1") should equal (Array("1".toCharArray))
@@ -36,8 +36,8 @@ class TestParseBranch extends FlatSpec {
   "ParseBranch" should "properly identify bytes which cause exceptions" in {
     val pc = ParseContextResource.generateThreeIntTwoComp3ThreeChar()
     val pb = new ParseBranch(pc)
-    pb.addNode("Filler", 5, new FillStrategy)
-    pb.addNode("BadInt", 3, new IntStrategy)
+    pb.addNode("Filler", 5, FillStrategy)
+    pb.addNode("BadInt", 3, IntStrategy)
     val thrown = intercept[ParseNodeException]{pb.parse()}
     thrown.getClass.getName should equal ("com.tam.cobol_interpreter.parser.exceptions.ParseNodeException")
     thrown.getNodeName should equal ("BadInt")

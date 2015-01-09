@@ -13,7 +13,7 @@ class TestParseStrategy extends FlatSpec {
 
   "An IntStrategy" should "parse an integer" in {
     val pc = new ParseContext(ParseContextResource.threeIntTwoComp3ThreeCharBytes)
-    val is = new IntStrategy()
+    val is = IntStrategy
     is.parse(pc, 3) should equal ("10".toCharArray)
 
     val pc2 = ParseContextResource.generateOneThroughNineChar()
@@ -33,13 +33,13 @@ class TestParseStrategy extends FlatSpec {
   "A Comp3Strategy" should "parse and unpack bytes as an integer" in {
     val pc = new ParseContext(ParseContextResource.threeIntTwoComp3ThreeCharBytes)
     pc.skip(3) should equal (3)
-    val c3s = new Comp3Strategy()
+    val c3s = Comp3Strategy
     c3s.parse(pc, 2) should equal ("211".toCharArray)
   }
 
   "A FillStrategy" should "only skip the number of bytes" in {
     val pc = new ParseContext(ParseContextResource.threeIntTwoComp3ThreeCharBytes)
-    val fs = new FillStrategy()
+    val fs = FillStrategy
     fs.parse(pc, 3) should equal ("".toCharArray)
     pc.pointer should equal (3)
   }
