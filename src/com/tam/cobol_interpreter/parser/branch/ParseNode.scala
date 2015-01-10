@@ -1,6 +1,6 @@
 package com.tam.cobol_interpreter.parser.branch
 
-import com.tam.cobol_interpreter.parser.exceptions.{StrategyException, ParseNodeException}
+import com.tam.cobol_interpreter.parser.exceptions.{ParseNodeException, StrategyException}
 import com.tam.cobol_interpreter.parser.strategy.ParseStrategy
 
 /**

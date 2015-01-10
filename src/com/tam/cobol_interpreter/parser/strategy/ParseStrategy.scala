@@ -1,7 +1,7 @@
 package com.tam.cobol_interpreter.parser.strategy
 
 import com.tam.cobol_interpreter.context.ParseContext
-import com.tam.cobol_interpreter.parser.exceptions.{StrategyException, IntStrategyException}
+import com.tam.cobol_interpreter.parser.exceptions.{IntStrategyException, StrategyException}
 import com.tam.cobol_interpreter.tools.{ByteArrayTool, Comp3Tool}
 
 /**

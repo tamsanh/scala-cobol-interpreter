@@ -2,8 +2,8 @@ package com.tam.cobol_interpreter.writer
 
 import java.io.OutputStream
 
-import com.tam.cobol_interpreter.context.{WriteContext, DataContext}
-import com.tam.cobol_interpreter.tools.{ByteArrayTool, ArrayTool}
+import com.tam.cobol_interpreter.context.{DataContext, WriteContext}
+import com.tam.cobol_interpreter.tools.{ArrayTool, ByteArrayTool}
 import com.tam.cobol_interpreter.writer.schema.WriterSchema
 
 /**

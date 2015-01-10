@@ -3,7 +3,7 @@ package com.tam.cobol_interpreter.writer
 import java.io.{InputStream, OutputStream}
 
 import com.tam.cobol_interpreter.tools.InputStreamTool
-import com.tam.cobol_interpreter.writer.schema.{WriterSchemaFactory, WriterSchema}
+import com.tam.cobol_interpreter.writer.schema.{WriterSchema, WriterSchemaFactory}
 
 /**
  * Created by tamu on 1/6/15.

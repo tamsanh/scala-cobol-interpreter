@@ -1,7 +1,5 @@
 package com.tam.cobol_interpreter.parser.exceptions
 
-import com.tam.cobol_interpreter.tools.ByteArrayTool
-
 /**
  * Created by tamu on 1/4/15.
  */

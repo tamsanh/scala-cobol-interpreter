@@ -1,7 +1,7 @@
 package com.tam.cobol_interpreter.writer.schema.expressions
 
-import WriterColumnExpressionMatcher._
 import com.tam.cobol_interpreter.writer.schema.exceptions.WriterColumnException
+import com.tam.cobol_interpreter.writer.schema.expressions.WriterColumnExpressionMatcher._
 
 /**
  * Created by tamu on 1/5/15.

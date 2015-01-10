@@ -2,9 +2,9 @@ package com.tam.cobol_interpreter.test.writer
 
 import java.io.ByteArrayOutputStream
 
-import com.tam.cobol_interpreter.context.{WriteContext, DataContext}
+import com.tam.cobol_interpreter.context.{DataContext, WriteContext}
 import com.tam.cobol_interpreter.tools.ByteArrayTool
-import com.tam.cobol_interpreter.writer.{Writer, WriterFactory}
+import com.tam.cobol_interpreter.writer.WriterFactory
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 

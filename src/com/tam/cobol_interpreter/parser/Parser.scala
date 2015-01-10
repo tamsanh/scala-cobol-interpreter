@@ -6,7 +6,6 @@ import com.tam.cobol_interpreter.context.{DataContext, ParseContext}
 import com.tam.cobol_interpreter.parser.branch.builder.StandardParseBranchBuilder
 import com.tam.cobol_interpreter.parser.exceptions._
 import com.tam.cobol_interpreter.parser.schema.ParserSchema
-import com.tam.cobol_interpreter.tools.ByteArrayTool
 
 /**
  * Created by tamu on 1/4/15.

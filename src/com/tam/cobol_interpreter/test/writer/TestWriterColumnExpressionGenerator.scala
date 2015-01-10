@@ -1,7 +1,7 @@
 package com.tam.cobol_interpreter.test.writer
 
 import com.tam.cobol_interpreter.writer.schema.exceptions.WriterColumnException
-import com.tam.cobol_interpreter.writer.schema.expressions.{NonEmptyColumn, PersistentColumn, BasicColumn, WriterColumnExpressionGenerator}
+import com.tam.cobol_interpreter.writer.schema.expressions.{BasicColumn, NonEmptyColumn, PersistentColumn, WriterColumnExpressionGenerator}
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 

@@ -1,7 +1,6 @@
 package com.tam.cobol_interpreter.test.parser
 
 import com.tam.cobol_interpreter.parser.schema.expressions._
-import com.tam.cobol_interpreter.tools.ArrayTool
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 

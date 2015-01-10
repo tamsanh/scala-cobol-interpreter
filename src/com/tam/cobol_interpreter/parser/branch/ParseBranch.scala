@@ -1,7 +1,7 @@
 package com.tam.cobol_interpreter.parser.branch
 
 import com.tam.cobol_interpreter.context.{DataContext, ParseContext}
-import com.tam.cobol_interpreter.parser.exceptions.{ParseBranchException, ParseNodeException, StrategyException, IntStrategyException}
+import com.tam.cobol_interpreter.parser.exceptions.{ParseBranchException, ParseNodeException}
 import com.tam.cobol_interpreter.parser.strategy.ParseStrategy
 
 import scala.collection.mutable

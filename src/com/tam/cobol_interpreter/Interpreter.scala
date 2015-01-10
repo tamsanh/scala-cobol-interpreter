@@ -4,8 +4,8 @@ import java.io._
 
 import com.tam.cobol_interpreter.parser.ParserFactory
 import com.tam.cobol_interpreter.parser.schema.ParserSchema
-import com.tam.cobol_interpreter.writer.schema.WriterSchema
 import com.tam.cobol_interpreter.writer.WriterFactory
+import com.tam.cobol_interpreter.writer.schema.WriterSchema
 
 /**
  * Created by tamu on 1/6/15.

@@ -1,8 +1,9 @@
 package com.tam.cobol_interpreter
 
+import java.io.{File, FileInputStream, InputStream}
+
 import com.tam.cobol_interpreter.parser.schema.{ParserSchema, ParserSchemaFactory}
 import com.tam.cobol_interpreter.writer.schema.{WriterSchema, WriterSchemaFactory}
-import java.io.{FileInputStream, File, InputStream}
 
 /**
  * Created by tamu on 1/6/15.

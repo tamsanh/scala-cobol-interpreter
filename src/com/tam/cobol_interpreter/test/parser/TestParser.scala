@@ -1,11 +1,11 @@
 package com.tam.cobol_interpreter.test.parser
 
-import java.io.{StringBufferInputStream, File}
+import java.io.StringBufferInputStream
 
 import com.tam.cobol_interpreter.context.{ContextTool, DataContext}
-import com.tam.cobol_interpreter.parser.exceptions.{ParserException, ParseException, ParseNodeException}
-import com.tam.cobol_interpreter.parser.{ParserFactory, Parser}
-import com.tam.cobol_interpreter.test.resource.{ParseContextResource, FileResources}
+import com.tam.cobol_interpreter.parser.ParserFactory
+import com.tam.cobol_interpreter.parser.exceptions.ParserException
+import com.tam.cobol_interpreter.test.resource.FileResources
 import com.tam.cobol_interpreter.tools.ByteArrayTool
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._

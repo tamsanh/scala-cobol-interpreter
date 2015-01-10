@@ -1,12 +1,12 @@
 package com.tam.cobol_interpreter.test
 
-import java.io.{StringBufferInputStream, ByteArrayOutputStream}
+import java.io.{ByteArrayOutputStream, StringBufferInputStream}
 
+import com.tam.cobol_interpreter.InterpreterFactory
 import com.tam.cobol_interpreter.test.resource.FileResources
 import com.tam.cobol_interpreter.tools.ByteArrayTool
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
-import com.tam.cobol_interpreter.InterpreterFactory
 
 /**
  * Created by tamu on 1/6/15.

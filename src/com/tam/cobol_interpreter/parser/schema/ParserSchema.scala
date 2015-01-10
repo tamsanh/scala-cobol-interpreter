@@ -6,7 +6,6 @@ import com.tam.cobol_interpreter.parser.branch.builder.ParseBranchBuilder
 import com.tam.cobol_interpreter.parser.exceptions._
 import com.tam.cobol_interpreter.parser.schema.expressions._
 import com.tam.cobol_interpreter.parser.strategy.ParseStrategyFactory
-import com.tam.cobol_interpreter.parser.strategy.CharStrategy
 import com.tam.cobol_interpreter.tools.{ArrayTool, ByteArrayTool}
 
 /**
