@@ -20,7 +20,7 @@ class Parser(schema:ParserSchema, fileToParse:InputStream) extends java.util.Ite
     totalBytesRead += parseContext.read(fileToParse)
     val parseBranchBuilder = new StandardParseBranchBuilder()
     try {
-      val parseBranch = schema.build(parseContext, parseBranchBuilder)
+      val parseBranch = schema.buildParseBranch(parseContext, parseBranchBuilder)
       parseBranch.parse()
     } catch {
       case e:ParseNodeException =>

@@ -34,7 +34,7 @@ class TestParserSchema extends FlatSpec {
          |Field1 Int 9
          |9
        """.stripMargin)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Int 'Field1' 9
@@ -59,7 +59,7 @@ class TestParserSchema extends FlatSpec {
          |EndCase
          |1
        """.stripMargin)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       s"""Initialized
          |Node: Int 'Case1' 1
@@ -68,7 +68,7 @@ class TestParserSchema extends FlatSpec {
        """.stripMargin.trim
     )
     pc.skip(1)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       s"""Initialized
          |Node: Int 'Case2' 1
@@ -90,7 +90,7 @@ class TestParserSchema extends FlatSpec {
          |EndOccurs
          |6
        """.stripMargin)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       s"""Initialized
          |Node: Int 'Field1' 1
@@ -116,7 +116,7 @@ class TestParserSchema extends FlatSpec {
          |Case -1
          |EndCase
          |0
-       """.stripMargin).build(pc, new StringParseBranchBuilder())
+       """.stripMargin).buildParseBranch(pc, new StringParseBranchBuilder())
     }
     thrown.getMessage should equal ("No Matching Case for Switch Val: '1'")
     thrown.getNodeName should equal ("Field1")
@@ -131,7 +131,7 @@ class TestParserSchema extends FlatSpec {
          |Case 1
          |EndCase
          |0
-       """.stripMargin).build(pc, pbb)}
+       """.stripMargin).buildParseBranch(pc, pbb)}
     thrown2.getMessage should equal ("Multiple Case Values of: '1'")
   }
 
@@ -155,7 +155,7 @@ class TestParserSchema extends FlatSpec {
          |EndOccurs
          |3
        """.stripMargin)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       s"""Initialized
          |Node: Int 'Case1' 1
@@ -217,7 +217,7 @@ class TestParserSchema extends FlatSpec {
     val pbb = new StringParseBranchBuilder()
     val pc = new ParseContext(Array(0x1C.toByte, 0x2C.toByte, 0x33.toByte, 0x1D.toByte, 0x7D.toByte):Array[Byte])
 
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Comp3 'Case1' 1
@@ -226,7 +226,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(1)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Comp3 'Case2' 1
@@ -235,7 +235,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(1)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Comp3 'Case2' 1
@@ -244,7 +244,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(1)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Comp3 'Case2' 1
@@ -253,7 +253,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(1)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Comp3 'Case3' 1
@@ -275,7 +275,7 @@ class TestParserSchema extends FlatSpec {
     val pbb = new StringParseBranchBuilder()
     val pc = new ParseContext(Array(0x1C.toByte, 0x2C.toByte, 0x1D.toByte, 0x2C.toByte):Array[Byte])
 
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Comp3 'Case1' 1
@@ -284,7 +284,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(1)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Comp3 'Case2' 1
@@ -293,7 +293,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(1)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Comp3 'Case3' 1
@@ -302,7 +302,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(1)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Comp3 'Case2' 1
@@ -323,7 +323,7 @@ class TestParserSchema extends FlatSpec {
     val pbb = new StringParseBranchBuilder()
     val pc = new ParseContext(ByteArrayTool.stringToByteArray("0 1010100"))
 
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Char 'Case1' 3
@@ -332,7 +332,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(3)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Char 'Case2' 3
@@ -341,7 +341,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(3)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Char 'Case3' 3
@@ -364,7 +364,7 @@ class TestParserSchema extends FlatSpec {
     val pbb = new StringParseBranchBuilder()
     val pc = new ParseContext(ByteArrayTool.stringToByteArray("001010100"))
 
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Char 'Case1' 3
@@ -373,7 +373,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(3)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Char 'Case2' 3
@@ -382,7 +382,7 @@ class TestParserSchema extends FlatSpec {
       """.stripMargin.trim())
 
     pc.skip(3)
-    schema.build(pc, pbb)
+    schema.buildParseBranch(pc, pbb)
     pbb.getStringParseBranch should equal (
       """Initialized
         |Node: Char 'Case3' 3

@@ -8,6 +8,8 @@ import com.tam.cobol_interpreter.parser.schema.expressions._
 import com.tam.cobol_interpreter.parser.strategy.ParseStrategyFactory
 import com.tam.cobol_interpreter.tools.{ArrayTool, ByteArrayTool}
 
+import scala.collection.mutable
+
 /**
  * Created by tamu on 1/4/15.
  */
@@ -25,7 +27,7 @@ class ParserSchema(expressionList: Array[ParserSchemaExpression]){
     }
   }
 
-  def build(parseContext: ParseContext, parseBranchBuilder: ParseBranchBuilder): ParseBranch = {
+  def buildParseBranch(parseContext: ParseContext, parseBranchBuilder: ParseBranchBuilder): ParseBranch = {
     val currPointer = parseContext.pointer
     parseBranchBuilder.initializeParseBranch()
     try {
