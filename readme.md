@@ -128,6 +128,8 @@ In somewhat of a descending priority order. (Except testing)
 
 * ~~Consolidate syntax checking~~
   * ~~Current syntax checking is kind of all over; it should be in the expression generator.~~
+* Visitors for Schema Expressions
+  * Just have visitors for the schema expressions instead of remaking the classes
 * Warnings for unused data.
   * It's a bit of a manual process, keeping the parser and writer in sync. It would be nice if the writer were to warn you of data that isn't being utilized, or for the writer to know what data will never be available.
 * Cobol Output Support
