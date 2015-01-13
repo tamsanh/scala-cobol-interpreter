@@ -5,7 +5,6 @@ import java.io.StringBufferInputStream
 import com.tam.cobol_interpreter.context.{ContextTool, DataContext}
 import com.tam.cobol_interpreter.parser.ParserFactory
 import com.tam.cobol_interpreter.parser.exceptions.ParserException
-import com.tam.cobol_interpreter.test.resource.FileResources
 import com.tam.cobol_interpreter.tools.ByteArrayTool
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
@@ -16,9 +15,9 @@ import org.scalatest.Matchers._
 class TestParser extends FlatSpec {
   "Parser" should "parse a file into DataContexts" in {
     // Field1 Int 3, Field2 Comp3 2, Field3 Char 3
-    val schemaFile = FileResources.parserSchemas.test1()
+    val schemaFile = this.getClass.getResourceAsStream("schemas/parserTest1.parser")
     // 123, 211, XYZ | 456, -211, ABC
-    val cobolFile = FileResources.cobol.test1()
+    val cobolFile = this.getClass.getResourceAsStream("/cobol/cobolTest1.cobol")
 
     val p = ParserFactory.createParser(schemaFile, cobolFile)
     val dc1 = p.next()
@@ -37,9 +36,10 @@ class TestParser extends FlatSpec {
   "Parser" should "properly handle cases" in {
     // FieldS Int 1 Field1 Int 4
     // FieldS Int 1 Field2 Int 2 Field3 Int 3
-    val schemaFile = FileResources.parserSchemas.test2()
+    val schemaFile = this.getClass.getResourceAsStream("/schemas/parserTest2.parser")
     // 10001201021000220203
-    val cobolFile = FileResources.cobol.test2()
+    val cobolFile = this.getClass.getResourceAsStream("/cobol/cobolTest2.cobol")
+    // 123, 211, XYZ | 456, -211, ABC
 
     val p = ParserFactory.createParser(schemaFile, cobolFile)
     p.hasNext should equal (true)
@@ -67,8 +67,8 @@ class TestParser extends FlatSpec {
   }
 
   "Parser" should "not be able to remove" in {
-    val schemaFile = FileResources.parserSchemas.test2()
-    val cobolFile = FileResources.cobol.test2()
+    val schemaFile = this.getClass.getResourceAsStream("/schemas/parserTest2.parser")
+    val cobolFile = this.getClass.getResourceAsStream("/cobol/cobolTest2.cobol")
 
     val p = ParserFactory.createParser(schemaFile, cobolFile)
     val thrown = intercept[UnsupportedOperationException]{p.remove()}

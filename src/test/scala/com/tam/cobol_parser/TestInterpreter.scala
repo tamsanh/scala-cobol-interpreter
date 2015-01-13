@@ -3,7 +3,6 @@ package com.tam.cobol_interpreter.test
 import java.io.{ByteArrayOutputStream, StringBufferInputStream}
 
 import com.tam.cobol_interpreter.InterpreterFactory
-import com.tam.cobol_interpreter.test.resource.FileResources
 import com.tam.cobol_interpreter.tools.ByteArrayTool
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
@@ -14,11 +13,11 @@ import org.scalatest.Matchers._
 class TestInterpreter extends FlatSpec{
   "Interpreter" should "interpret a cobol stream" in {
     val interpreter = InterpreterFactory.createInterpreter(
-      FileResources.parserSchemas.test1(),
-      FileResources.writerSchemas.test1()
+      this.getClass.getResourceAsStream("/schemas/parserTest1.parser"),
+      this.getClass.getResourceAsStream("/schemas/writerTest1.writer")
     )
     val fOut = new ByteArrayOutputStream()
-    val fIn = FileResources.cobol.test1()
+    val fIn = this.getClass.getResourceAsStream("/cobol/cobolTest1.cobol")
     interpreter.interpret(fIn, fOut)
     ByteArrayTool.makeString(fOut.toByteArray) should equal (
       "123|211|XYZ\n456|-211|ABC")
@@ -26,11 +25,11 @@ class TestInterpreter extends FlatSpec{
 
   "Interpreter" should "handle persistency and switching" in {
     val interpreter = InterpreterFactory.createInterpreter(
-      FileResources.parserSchemas.test2(),
-      FileResources.writerSchemas.test2()
+      this.getClass.getResourceAsStream("/schemas/parserTest2.parser"),
+      this.getClass.getResourceAsStream("/schemas/writerTest2.writer")
     )
     val fOut = new ByteArrayOutputStream()
-    val fIn = FileResources.cobol.test2()
+    val fIn = this.getClass.getResourceAsStream("/cobol/cobolTest2.cobol")
     interpreter.interpret(fIn, fOut)
     ByteArrayTool.makeString(fOut.toByteArray).trim() should equal (
       """
@@ -43,11 +42,11 @@ class TestInterpreter extends FlatSpec{
 
   "Interpreter" should "be aware of non-empty fields" in {
     val interpreter = InterpreterFactory.createInterpreter(
-      FileResources.parserSchemas.test2(),
-      FileResources.writerSchemas.test3()
+      this.getClass.getResourceAsStream("/schemas/parserTest2.parser"),
+      this.getClass.getResourceAsStream("/schemas/writerTest3.writer")
     )
     val fOut = new ByteArrayOutputStream()
-    val fIn = FileResources.cobol.test2()
+    val fIn = this.getClass.getResourceAsStream("/cobol/cobolTest2.cobol")
     interpreter.interpret(fIn, fOut)
     ByteArrayTool.makeString(fOut.toByteArray).trim() should equal (
       """
@@ -58,11 +57,11 @@ class TestInterpreter extends FlatSpec{
 
   "Interpreter" should "have changeable terminators" in {
     val interpreter = InterpreterFactory.createInterpreter(
-      FileResources.parserSchemas.test2(),
-      FileResources.writerSchemas.test3()
+      this.getClass.getResourceAsStream("/schemas/parserTest2.parser"),
+      this.getClass.getResourceAsStream("/schemas/writerTest3.writer")
     )
     val fOut = new ByteArrayOutputStream()
-    val fIn = FileResources.cobol.test2()
+    val fIn = this.getClass.getResourceAsStream("/cobol/cobolTest2.cobol")
     interpreter.setSeparator(',')
     interpreter.setTerminator('y')
     interpreter.interpret(fIn, fOut)
