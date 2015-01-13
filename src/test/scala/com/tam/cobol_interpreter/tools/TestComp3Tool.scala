@@ -1,6 +1,6 @@
 package com.tam.cobol_interpreter.test.tools
 
-import com.tam.cobol_interpreter.tools.Comp3Tool
+import com.tam.cobol_interpreter.tools.{ByteArrayTool, Comp3Tool}
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
@@ -17,6 +17,12 @@ class TestComp3Tool extends FlatSpec {
     Comp3Tool.unpack(Array(0x02:Byte, 0x1C: Byte)) should equal ("21".toCharArray)
     Comp3Tool.unpack(Array(0x42:Byte, 0x1C: Byte)) should equal ("421".toCharArray)
     Comp3Tool.unpack(Array(0x42:Byte, 0x1D: Byte)) should equal ("-421".toCharArray)
+  }
+
+  "A Comp3Tool" should "expand large amounts of bytes" in {
+    ByteArrayTool.makeString(Comp3Tool.unpack(Array(0x42:Byte, 0x42:Byte, 0x42:Byte, 0x42:Byte,
+                           0x42:Byte, 0x42:Byte, 0x42:Byte, 0x42:Byte,
+                           0x42:Byte, 0x42:Byte, 0x1C: Byte))) should equal ("424242424242424242421")
   }
 
   "A Comp3Tool" should "pack integers" in {

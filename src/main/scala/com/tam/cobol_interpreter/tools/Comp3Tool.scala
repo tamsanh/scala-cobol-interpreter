@@ -1,5 +1,7 @@
 package com.tam.cobol_interpreter.tools
 
+import java.math.BigInteger
+
 /**
  * Created by tamu on 1/1/15.
  */
@@ -15,11 +17,12 @@ object Comp3Tool {
     }).mkString
     val last_digit = (data.last & 0xF0) >> 4
     val comp_sign = data.last & 0x0F
-    (if (comp_sign == 0x0B || comp_sign == 0x0D)
-      "-" + (digits.mkString + last_digit.toString)
-    else
-      digits.mkString + last_digit.toString
-    ).toInt.toString.toCharArray.map(_.toByte).toArray
+    new BigInteger(
+      if (comp_sign == 0x0B || comp_sign == 0x0D)
+        "-" + (digits.mkString + last_digit.toString)
+      else
+        digits.mkString + last_digit.toString
+    ).toString.toCharArray.map(_.toByte).toArray
   }
 
   def pack(data: String): Array[Byte] = this.pack(data.toInt)
