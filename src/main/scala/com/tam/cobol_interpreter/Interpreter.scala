@@ -49,6 +49,10 @@ object Interpreter{
           """
             |interpreter [Parser Schema Location] [Writer Schema Location]
             | Reads from stdin and writes to stdout
+            |
+            |interpreter [Parser Schema Location] [Writer Schema Location] [Input File Location]
+            | Writes to stdout
+            |
             |interpreter [Parser Schema Location] [Writer Schema Location] [Input File Location] [Output File Location]
           """.stripMargin.trim()
         System.out.print(usage + "\n")
