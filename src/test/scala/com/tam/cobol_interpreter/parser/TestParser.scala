@@ -15,7 +15,7 @@ import org.scalatest.Matchers._
 class TestParser extends FlatSpec {
   "Parser" should "parse a file into DataContexts" in {
     // Field1 Int 3, Field2 Comp3 2, Field3 Char 3
-    val schemaFile = this.getClass.getResourceAsStream("schemas/parserTest1.parser")
+    val schemaFile = this.getClass.getResourceAsStream("/schemas/parserTest1.parser")
     // 123, 211, XYZ | 456, -211, ABC
     val cobolFile = this.getClass.getResourceAsStream("/cobol/cobolTest1.cobol")
 
