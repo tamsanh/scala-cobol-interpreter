@@ -1,6 +1,6 @@
 package com.tam.cobol_interpreter.context
 
-import java.io.InputStream
+import java.io.{DataInputStream, InputStream}
 
 import com.tam.cobol_interpreter.tools.ByteArrayTool
 
@@ -15,6 +15,7 @@ class ParseContext(data: Array[Byte], size: Int) {
    * We'd need to add grammar for how much data the ParseContext should hold..
    */
   var pointer = 0
+
 
   def this(arr: Array[Byte]) = this(arr, arr.size)
   def this(size: Int) = this(new Array[Byte](size), size)

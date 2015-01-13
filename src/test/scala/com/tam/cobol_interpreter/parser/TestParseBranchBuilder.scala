@@ -1,8 +1,8 @@
 package com.tam.cobol_interpreter.test.parser
 
+import com.tam.cobol_interpreter.context.ParseContextFactory
 import com.tam.cobol_interpreter.parser.branch.ParseBranch
 import com.tam.cobol_interpreter.parser.branch.builder.{ParseBranchBuilder, StandardParseBranchBuilder, StringParseBranchBuilder}
-import com.tam.cobol_interpreter.test.resource.ParseContextResource
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
@@ -19,14 +19,14 @@ class TestParseBranchBuilder extends FlatSpec {
     builder.addIntNode("Field1", 3)
     builder.addComp3Node("Field2", 2)
     builder.addCharNode("Field3", 3)
-    builder.setParseContext(ParseContextResource.generateThreeIntTwoComp3ThreeChar())
+    builder.setParseContext(ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/threeIntTwoComp3ThreeCharBytes.cobol")))
     builder.getParseBranch
   }
 
   def testBuilder2(builder: ParseBranchBuilder): ParseBranch = {
     builder.initializeParseBranch()
     builder.addCharNode("Field1", 4)
-    builder.setParseContext(ParseContextResource.generateThree0One3())
+    builder.setParseContext(ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/three0One3.cobol")))
     builder.getParseBranch
   }
 
@@ -34,7 +34,7 @@ class TestParseBranchBuilder extends FlatSpec {
     builder.initializeParseBranch()
     builder.addFillNode(1)
     builder.addIntNode("Field1", 3)
-    builder.setParseContext(ParseContextResource.generateThree0One3())
+    builder.setParseContext(ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/three0One3.cobol")))
     builder.getParseBranch
   }
 
@@ -62,14 +62,14 @@ class TestParseBranchBuilder extends FlatSpec {
         |Node: Int 'Field1' 3
         |Node: Comp3 'Field2' 2
         |Node: Char 'Field3' 3
-        |ParseContext: ${ParseContextResource.generateThreeIntTwoComp3ThreeChar().length}
+        |ParseContext: ${ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/threeIntTwoComp3ThreeCharBytes.cobol")).length}
         |Built""".stripMargin)
 
     testBuilder2(pbb)
     pbb.getStringParseBranch should equal (
     s"""Initialized
        |Node: Char 'Field1' 4
-       |ParseContext: ${ParseContextResource.generateThree0One3().length}
+       |ParseContext: ${ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/three0One3.cobol")).length}
        |Built""".stripMargin
     )
 
@@ -78,7 +78,7 @@ class TestParseBranchBuilder extends FlatSpec {
     s"""Initialized
        |Node: Fill 'Filler' 1
        |Node: Int 'Field1' 3
-       |ParseContext: ${ParseContextResource.generateThree0One3().length}
+       |ParseContext: ${ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/three0One3.cobol")).length}
        |Built""".stripMargin
     )
   }

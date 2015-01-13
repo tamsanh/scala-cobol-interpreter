@@ -1,12 +1,11 @@
 package com.tam.cobol_interpreter.test.parser
 
-import com.tam.cobol_interpreter.context.ParseContext
+import com.tam.cobol_interpreter.context.{ParseContextFactory, ParseContext}
 import com.tam.cobol_interpreter.parser.branch.builder._
 import com.tam.cobol_interpreter.parser.exceptions.{ParseSwitchValueException, SchemaException, SwitchCaseException}
 import com.tam.cobol_interpreter.parser.schema.expressions._
 import com.tam.cobol_interpreter.parser.schema.{ParserSchema, ParserSchemaFactory}
-import com.tam.cobol_interpreter.test.resource.ParseContextResource
-import com.tam.cobol_interpreter.tools.ByteArrayTool
+import com.tam.cobol_interpreter.tools.{InputStreamTool, ByteArrayTool}
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
@@ -29,7 +28,7 @@ class TestParserSchema extends FlatSpec {
     ))
   }
   "ParserSchema" should "generate a ParseBranch based on a Schema" in {
-    val pc = ParseContextResource.generateOneThroughNineChar()
+    val pc = ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/oneThroughNine.cobol"))
     val pbb = new StringParseBranchBuilder()
     val schema = ParserSchemaFactory.createSchema(
       s"""
@@ -48,7 +47,7 @@ class TestParserSchema extends FlatSpec {
   }
 
   "ParserSchema" should "switch properly" in {
-    val pc = ParseContextResource.generateOneThroughNineChar()
+    val pc = ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/oneThroughNine.cobol"))
     val pbb = new StringParseBranchBuilder()
     val schema = ParserSchemaFactory.createSchema(
       s"""
@@ -82,7 +81,7 @@ class TestParserSchema extends FlatSpec {
   }
 
   "ParserSchema" should "expand occurs correctly" in {
-    val pc = ParseContextResource.generateOneThroughNineChar()
+    val pc = ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/oneThroughNine.cobol"))
     val pbb = new StringParseBranchBuilder()
     val schema = ParserSchemaFactory.createSchema(
       s"""
@@ -109,7 +108,7 @@ class TestParserSchema extends FlatSpec {
   }
 
   "ParserSchema" should "throw exceptions" in {
-    val pc = ParseContextResource.generateOneThroughNineChar()
+    val pc = ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/oneThroughNine.cobol"))
     val pbb = new StringParseBranchBuilder()
     val thrown = intercept[ParseSwitchValueException]{
       ParserSchemaFactory.createSchema(
@@ -139,7 +138,7 @@ class TestParserSchema extends FlatSpec {
   }
 
   "ParserSchema" should "properly combine occurs and switches" in {
-    val pc = ParseContextResource.generateOneThroughNineChar()
+    val pc = ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/oneThroughNine.cobol"))
     val pbb = new StringParseBranchBuilder()
     val schema = ParserSchemaFactory.createSchema(
       s"""

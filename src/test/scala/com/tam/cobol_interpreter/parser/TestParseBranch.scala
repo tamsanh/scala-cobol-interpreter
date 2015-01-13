@@ -1,9 +1,9 @@
 package com.tam.cobol_interpreter.test.parser
 
+import com.tam.cobol_interpreter.context.ParseContextFactory
 import com.tam.cobol_interpreter.parser.branch.ParseBranch
 import com.tam.cobol_interpreter.parser.exceptions.ParseNodeException
 import com.tam.cobol_interpreter.parser.strategy.{FillStrategy, IntStrategy}
-import com.tam.cobol_interpreter.test.resource.ParseContextResource
 import com.tam.cobol_interpreter.tools.ByteArrayTool
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
@@ -16,7 +16,7 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class TestParseBranch extends FlatSpec {
   "A ParseBranch" should "parse a parse context and assign the value to a DataContext" in {
-    val pc = ParseContextResource.generateOneThroughNineChar()
+    val pc = ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/oneThroughNine.cobol"))
     val pb = new ParseBranch(pc)
     pb.addNode("Field1", 1, IntStrategy)
     pb.addNode("Field2", 2, IntStrategy)
@@ -37,7 +37,7 @@ class TestParseBranch extends FlatSpec {
   }
 
   "ParseBranch" should "properly identify bytes which cause exceptions" in {
-    val pc = ParseContextResource.generateThreeIntTwoComp3ThreeChar()
+    val pc = ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/threeIntTwoComp3ThreeCharBytes.cobol"))
     val pb = new ParseBranch(pc)
     pb.addNode("Filler", 5, FillStrategy)
     pb.addNode("BadInt", 3, IntStrategy)
