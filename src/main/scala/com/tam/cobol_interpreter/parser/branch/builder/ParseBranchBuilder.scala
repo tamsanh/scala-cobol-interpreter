@@ -13,6 +13,7 @@ abstract class ParseBranchBuilder {
    */
 
   def initializeParseBranch(): Unit
+  def getCurrentLength:Int
   def setParseContext(pc: ParseContext): Unit 
   def addIntNode(name: String, bytes: Int): Unit 
   def addCharNode(name: String, bytes: Int): Unit 

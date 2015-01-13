@@ -8,17 +8,25 @@ import com.tam.cobol_interpreter.parser.branch.ParseBranch
  */
 class StringParseBranchBuilder extends ParseBranchBuilder{
   var branchString = new StringBuffer()
+  var length:Int = 0
 
-  private def append(s: String): Unit = this.branchString.append(s + "\n")
+  def getCurrentLength:Int = this.length
+
+  private def append(s: String, b:Int): Unit = {
+    this.branchString.append(s + "\n")
+  }
 
   override def initializeParseBranch(): Unit = {
     this.branchString = new StringBuffer()
-    append("Initialized")
+    append("Initialized", 0)
   }
 
-  override def setParseContext(pc: ParseContext): Unit = append(s"ParseContext: ${pc.length}")
+  override def setParseContext(pc: ParseContext): Unit = append(s"ParseContext: ${pc.length}", 0)
 
-  private def appendNode(name:String, bytes: Int, nType:String): Unit = append(s"Node: $nType '$name' $bytes")
+  private def appendNode(name:String, bytes: Int, nType:String): Unit = {
+    this.length += bytes
+    append(s"Node: $nType '$name' $bytes", bytes)
+  }
 
   override def addComp3Node(name: String, bytes: Int): Unit = appendNode(name, bytes, "Comp3")
 

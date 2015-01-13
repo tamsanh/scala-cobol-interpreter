@@ -13,6 +13,9 @@ class StandardParseBranchBuilder extends ParseBranchBuilder {
     */
 
   var branch: ParseBranch = new ParseBranch()
+  var length:Int = 0
+
+  def getCurrentLength:Int = this.length
 
   def initializeParseBranch(): Unit = {
    this.branch = new ParseBranch()
@@ -22,23 +25,16 @@ class StandardParseBranchBuilder extends ParseBranchBuilder {
    this.branch.setParseContext(pc)
   }
 
-  def addIntNode(name: String, bytes: Int): Unit = {
-    addNode(name, bytes, ParseStrategyFactory.IntStrategyName)
-  }
+  def addIntNode(name: String, bytes: Int): Unit = addNode(name, bytes, ParseStrategyFactory.IntStrategyName)
 
-  def addCharNode(name: String, bytes: Int): Unit = {
-    addNode(name, bytes, ParseStrategyFactory.CharStrategyName)
-  }
+  def addCharNode(name: String, bytes: Int): Unit = addNode(name, bytes, ParseStrategyFactory.CharStrategyName)
 
-  def addFillNode(bytes: Int): Unit = {
-    addNode("Filler", bytes, ParseStrategyFactory.FillStrategyName)
-  }
+  def addFillNode(bytes: Int): Unit = addNode("Filler", bytes, ParseStrategyFactory.FillStrategyName)
 
-  def addComp3Node(name: String, bytes: Int): Unit = {
-    addNode(name, bytes, ParseStrategyFactory.Comp3StrategyName)
-  }
+  def addComp3Node(name: String, bytes: Int): Unit = addNode(name, bytes, ParseStrategyFactory.Comp3StrategyName)
 
   def addNode(name:String, bytes:Int, strategy:String): Unit = {
+    this.length += bytes
     val strategyObj = ParseStrategyFactory.getStrategy(strategy)
     branch.addNode(name, bytes, strategyObj)
   }

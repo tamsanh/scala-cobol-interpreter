@@ -82,4 +82,18 @@ class TestParseBranchBuilder extends FlatSpec {
        |Built""".stripMargin
     )
   }
+
+  "StringParseBranchBuilder" should "return the current length of its branch" in {
+    val pbb = new StringParseBranchBuilder()
+
+    testBuilder(pbb)
+    pbb.getCurrentLength should equal (8)
+  }
+
+  "StandardParseBranchBuilder" should "return the current length of its branch" in {
+    val pbb = new StandardParseBranchBuilder()
+
+    testBuilder(pbb)
+    pbb.getCurrentLength should equal (8)
+  }
 }
