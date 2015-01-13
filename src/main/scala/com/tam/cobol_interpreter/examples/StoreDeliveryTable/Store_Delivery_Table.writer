@@ -1,0 +1,39 @@
+# This is an example writer for the Store_Delivery_Table parsed by the parser
+
+Product_CD
+Product_Amt
+# These rows correspond to the data that was previous parsed with the parser
+# They are a part of the Occurs block, and are being transposed here
+# This works by expanding the other column's data sets
+#   to match the length of the columns that were in the Occurs' data set
+
+Store_CD Persistent
+Store_Name Persistent
+# If the Persistent flag is set, then the field will carry over the last seen data,
+# otherwise if this data is not set, then nothing will be written
+
+Date Non-Empty
+# Non-Empty fields must contain a value before the entire set of fields is written
+# If a field is left empty by the parser,
+#   the writer will not write the row until the field is non-empty
+# If there are multiple non-empty fields, they all must be non-empty before the field will be written
+
+Delivery_CD
+# The Delivery_CD, although it was part of the parser's Occurs expression group,
+# the order of the writer schema is independent of the order of the parser schema
+
+# CapturedSwitchValue | RowSwitch
+## Here, you can see the commentend CapturedSwitchValue and RowSwitch value
+## A) You don't have to output all the captured columns.
+## B) RowSwitch is still available to you
+
+# Due to the way the Switch Case was written,
+# RowSwitch will equal CapturedSwitchValue, but only when they are both R.
+# RowSwitch can still be T, but CapturedSwitchValue can only be R
+#   since is not set when RowSwitch is T.
+
+# CapturedSwitchValue can be made to have a value
+#   for every row by either making it Persistent, or Non-Empty,
+#   or naively adding it to the other case, as in:
+#     "Case T | Filler 1" -> "Case T | CapturedSwitchValue Char 1",
+
