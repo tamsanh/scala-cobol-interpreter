@@ -18,12 +18,11 @@ class StandardParseBranchBuilder extends ParseBranchBuilder {
   def getCurrentLength:Int = this.length
 
   def initializeParseBranch(): Unit = {
-   this.branch = new ParseBranch()
+    this.length = 0
+    this.branch = new ParseBranch()
   }
 
-  def setParseContext(pc: ParseContext): Unit = {
-   this.branch.setParseContext(pc)
-  }
+  def setParseContext(pc: ParseContext): Unit = this.branch.setParseContext(pc)
 
   def addIntNode(name: String, bytes: Int): Unit = addNode(name, bytes, ParseStrategyFactory.IntStrategyName)
 

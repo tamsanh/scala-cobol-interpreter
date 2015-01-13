@@ -17,6 +17,7 @@ class StringParseBranchBuilder extends ParseBranchBuilder{
   }
 
   override def initializeParseBranch(): Unit = {
+    this.length = 0
     this.branchString = new StringBuffer()
     append("Initialized", 0)
   }

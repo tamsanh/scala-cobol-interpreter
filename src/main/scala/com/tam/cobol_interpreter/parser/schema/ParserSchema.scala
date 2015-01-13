@@ -18,6 +18,9 @@ class ParserSchema(expressionList: Array[ParserSchemaExpression]){
   /**
    * Schemas are the ones that are given the parseContexts, and build branches
    */
+  var fitWithFill = true
+
+  def setFitWithFill(o:Boolean): Unit = fitWithFill = o
   def getExpressionList: Array[ParserSchemaExpression] = this.expressionList
   override def equals(that: Any): Boolean = {
     that match {
@@ -33,6 +36,9 @@ class ParserSchema(expressionList: Array[ParserSchemaExpression]){
     try {
       ParserSchema.recBuild(parseContext, parseBranchBuilder, this.expressionList)
       parseBranchBuilder.setParseContext(parseContext)
+      val branchCheckSum = this.expressionList.filter(_.isInstanceOf[RowBytes]).apply(0).bytes - parseBranchBuilder.getCurrentLength
+      if(fitWithFill)
+        parseBranchBuilder.addFillNode(branchCheckSum)
       parseBranchBuilder.getParseBranch
     } catch {
       case e:Exception =>
@@ -60,7 +66,8 @@ class ParserSchema(expressionList: Array[ParserSchemaExpression]){
     this.actualSize == this.rowByteSize
   }
 
-  if(!isSizeAccurate) throw new SchemaException(s"Actual Size [$actualSize] does not equal RowByte Size [$rowByteSize]")
+  // if(!isSizeAccurate) throw new SchemaException(s"Actual Size [$actualSize] does not equal RowByte Size [$rowByteSize]")
+  if(!isSizeAccurate) System.err.println(s"ParseSchema Issue: Actual Size [$actualSize] does not equal RowByte Size [$rowByteSize]")
 }
 
 object ParserSchema {
