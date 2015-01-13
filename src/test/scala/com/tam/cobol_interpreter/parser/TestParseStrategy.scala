@@ -4,6 +4,7 @@ import java.io.InputStreamReader
 
 import com.tam.cobol_interpreter.context.{ParseContext, ParseContextFactory}
 import com.tam.cobol_interpreter.parser.strategy.{CharStrategy, Comp3Strategy, FillStrategy, IntStrategy}
+import com.tam.cobol_interpreter.tools.ByteArrayTool
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
@@ -22,6 +23,12 @@ class TestParseStrategy extends FlatSpec {
 
     val pc2 = ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/oneThroughNine.cobol"))
     is.parse(pc2, 3) should equal ("123".toCharArray)
+  }
+
+  "IntStrategy" should "be able to parse a large integer" in {
+    val pc = ParseContextFactory.createParseContext(this.getClass.getResourceAsStream("/cobol/twentyTwoDigitNumber.cobol"))
+    val is = IntStrategy
+    ByteArrayTool.makeString(is.parse(pc, pc.length)) should equal ("27000002940120399850")
   }
 
   "A CharStrategy" should "parse a char as it is" in {

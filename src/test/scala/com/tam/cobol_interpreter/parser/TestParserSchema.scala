@@ -401,4 +401,36 @@ class TestParserSchema extends FlatSpec {
       new ParserSchema(Array(TableName("one")))
     }.getMessage should equal ("No RowByte Found")
   }
+
+  "ParseSchema" should "auto-fill with Fillers" in {
+    val schema = ParserSchemaFactory.createSchema( s"""
+    'TestTable
+    'Switch V Char 2
+    'Case 01 | Case1 Char 1 | EndCase
+    'Case 10 | Case2 Char 2 | EndCase
+    'Case 11 | Case3 Char 3 | EndCase
+    'EndCase
+    '12
+  """.stripMargin('\''))
+    val pbb = new StringParseBranchBuilder()
+    val pc = new ParseContext(ByteArrayTool.stringToByteArray("01010100    "))
+    schema.buildParseBranch(pc, pbb)
+    pbb.getStringParseBranch should equal (
+    """Initialized
+      |Node: Char 'Case1' 1
+      |ParseContext: 12
+      |Node: Fill 'Filler' 11
+      |Built
+    """.stripMargin.trim())
+
+    val pc2 = new ParseContext(ByteArrayTool.stringToByteArray("1010100     "))
+    schema.buildParseBranch(pc2, pbb)
+    pbb.getStringParseBranch should equal (
+      """Initialized
+        |Node: Char 'Case2' 2
+        |ParseContext: 12
+        |Node: Fill 'Filler' 10
+        |Built
+      """.stripMargin.trim())
+  }
 }

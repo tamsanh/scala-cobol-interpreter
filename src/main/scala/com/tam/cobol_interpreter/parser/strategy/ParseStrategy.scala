@@ -1,5 +1,7 @@
 package com.tam.cobol_interpreter.parser.strategy
 
+import java.math.BigInteger
+
 import com.tam.cobol_interpreter.context.ParseContext
 import com.tam.cobol_interpreter.parser.exceptions.{IntStrategyException, StrategyException}
 import com.tam.cobol_interpreter.tools.{ByteArrayTool, Comp3Tool}
@@ -29,9 +31,10 @@ abstract class ParseStrategy {
 object IntStrategy extends ParseStrategy {
   def parse(parseContext: ParseContext, bytes: Int): Array[Byte] = {
     val toParse = getNextBytes(parseContext, bytes)
-    try
-      toParse.map(_.toChar).mkString.toInt.toString.toCharArray.map(_.toByte).toArray
-    catch {
+    try {
+      val bd: BigInt = new BigInteger(toParse.map(_.toChar).mkString)
+      bd.toString.toCharArray.map(_.toByte).toArray
+    } catch {
       case e:Exception =>
         throw new IntStrategyException(s"IntStrategyException: ${e.getMessage}", toParse)
     }
