@@ -128,6 +128,8 @@ In somewhat of a descending priority order. (Except testing)
 
 * ~~Consolidate syntax checking~~
   * ~~Current syntax checking is kind of all over; it should be in the expression generator.~~
+* Auto Fill
+  * For when you're experimenting, and don't want to have to do the math to fill the rest of the bytes
 * Visitors for Schema Expressions
   * Just have visitors for the schema expressions instead of remaking the classes
 * Warnings for unused data.
