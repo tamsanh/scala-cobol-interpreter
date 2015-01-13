@@ -2,12 +2,15 @@ package com.tam.cobol_interpreter.test.writer
 
 import com.tam.cobol_interpreter.writer.schema.exceptions.WriterColumnException
 import com.tam.cobol_interpreter.writer.schema.expressions.{BasicColumn, NonEmptyColumn, PersistentColumn, WriterColumnExpressionGenerator}
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/5/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestWriterColumnExpressionGenerator extends FlatSpec{
   "WriterColumnExpressionGenerator" should "generate WriterColumnExpression lists" in {
     WriterColumnExpressionGenerator.generateExpressionList(

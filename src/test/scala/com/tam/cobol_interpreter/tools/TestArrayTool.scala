@@ -1,12 +1,15 @@
 package com.tam.cobol_interpreter.test.tools
 
 import com.tam.cobol_interpreter.tools.ArrayTool
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/5/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestArrayTool extends FlatSpec {
   "RectangleTool" should "make all arrays of byte arrays equal length" in {
     ArrayTool.rectangularizeDoubleArray[Array[Byte]](

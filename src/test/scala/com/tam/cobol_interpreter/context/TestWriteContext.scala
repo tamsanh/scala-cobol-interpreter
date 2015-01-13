@@ -2,12 +2,15 @@ package com.tam.cobol_interpreter.test.context
 
 import com.tam.cobol_interpreter.context.WriteContext
 import com.tam.cobol_interpreter.tools.ByteArrayTool
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/5/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestWriteContext extends FlatSpec {
   "WriteContext" should "return that a column exists" in {
     val wc = new WriteContext()

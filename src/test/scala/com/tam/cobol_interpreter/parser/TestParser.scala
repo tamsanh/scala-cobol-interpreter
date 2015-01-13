@@ -6,12 +6,15 @@ import com.tam.cobol_interpreter.context.{ContextTool, DataContext}
 import com.tam.cobol_interpreter.parser.ParserFactory
 import com.tam.cobol_interpreter.parser.exceptions.ParserException
 import com.tam.cobol_interpreter.tools.ByteArrayTool
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/4/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestParser extends FlatSpec {
   "Parser" should "parse a file into DataContexts" in {
     // Field1 Int 3, Field2 Comp3 2, Field3 Char 3

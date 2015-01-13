@@ -3,12 +3,15 @@ package com.tam.cobol_interpreter.test.parser
 import com.tam.cobol_interpreter.parser.branch.ParseBranch
 import com.tam.cobol_interpreter.parser.branch.builder.{ParseBranchBuilder, StandardParseBranchBuilder, StringParseBranchBuilder}
 import com.tam.cobol_interpreter.test.resource.ParseContextResource
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/2/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestParseBranchBuilder extends FlatSpec {
 
   def testBuilder(builder: ParseBranchBuilder):ParseBranch = {

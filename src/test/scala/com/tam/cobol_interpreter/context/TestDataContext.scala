@@ -1,12 +1,15 @@
 package com.tam.cobol_interpreter.test.context
 
 import com.tam.cobol_interpreter.context.{ContextTool, DataContext}
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/2/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestDataContext extends FlatSpec {
 
   "DataContext" should "keep string values in arrays" in {

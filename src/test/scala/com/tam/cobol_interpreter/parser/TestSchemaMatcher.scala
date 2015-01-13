@@ -1,13 +1,16 @@
 package com.tam.cobol_interpreter.test.parser
 
 import com.tam.cobol_interpreter.parser.schema.expressions.ExpressionMatcher._
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 
 /**
  * Created by tamu on 1/3/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestSchemaMatcher extends FlatSpec {
   "TableNameMatcher" should "match table names" in {
     ("Table_Name" match {

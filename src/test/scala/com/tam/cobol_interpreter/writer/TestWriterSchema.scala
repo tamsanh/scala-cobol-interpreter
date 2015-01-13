@@ -3,12 +3,15 @@ package com.tam.cobol_interpreter.test.writer
 import com.tam.cobol_interpreter.context.{DataContext, WriteContext}
 import com.tam.cobol_interpreter.tools.ByteArrayTool
 import com.tam.cobol_interpreter.writer.schema.WriterSchemaFactory
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/5/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestWriterSchema extends FlatSpec{
   "WriterSchema" should "properly modify a WriteContext" in {
     val wc = new WriteContext()

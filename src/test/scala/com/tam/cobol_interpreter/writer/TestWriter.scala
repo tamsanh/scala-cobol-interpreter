@@ -5,12 +5,15 @@ import java.io.ByteArrayOutputStream
 import com.tam.cobol_interpreter.context.{DataContext, WriteContext}
 import com.tam.cobol_interpreter.tools.ByteArrayTool
 import com.tam.cobol_interpreter.writer.WriterFactory
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/5/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestWriter extends FlatSpec {
   "Writer" should "write out DataContexts based on a given schema" in {
     val out = new ByteArrayOutputStream()

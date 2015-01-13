@@ -1,13 +1,15 @@
 package com.tam.cobol_interpreter.test.tools
 
 import com.tam.cobol_interpreter.tools.Comp3Tool
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/2/15.
  */
-
+@RunWith(classOf[JUnitRunner])
 class TestComp3Tool extends FlatSpec {
   "A Comp3Tool" should "expand packed bytes" in {
     Comp3Tool.unpack(Array(0x1D:Byte)) should equal ("-1".toCharArray)

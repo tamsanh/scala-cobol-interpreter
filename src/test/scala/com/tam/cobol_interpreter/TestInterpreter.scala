@@ -4,12 +4,15 @@ import java.io.{ByteArrayOutputStream, StringBufferInputStream}
 
 import com.tam.cobol_interpreter.InterpreterFactory
 import com.tam.cobol_interpreter.tools.ByteArrayTool
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/6/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestInterpreter extends FlatSpec{
   "Interpreter" should "interpret a cobol stream" in {
     val interpreter = InterpreterFactory.createInterpreter(

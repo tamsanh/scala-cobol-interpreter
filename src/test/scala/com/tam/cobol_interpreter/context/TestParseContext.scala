@@ -3,12 +3,15 @@ package com.tam.cobol_interpreter.test.context
 import java.io.StringBufferInputStream
 
 import com.tam.cobol_interpreter.context.ParseContext
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/2/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestParseContext extends FlatSpec {
   val toRead = Array(0x10: Byte, 0x1C: Byte, 'X': Byte)
   val test = new ParseContext(toRead.length)

@@ -5,12 +5,15 @@ import com.tam.cobol_interpreter.parser.exceptions.ParseNodeException
 import com.tam.cobol_interpreter.parser.strategy.{FillStrategy, IntStrategy}
 import com.tam.cobol_interpreter.test.resource.ParseContextResource
 import com.tam.cobol_interpreter.tools.ByteArrayTool
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/2/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestParseBranch extends FlatSpec {
   "A ParseBranch" should "parse a parse context and assign the value to a DataContext" in {
     val pc = ParseContextResource.generateOneThroughNineChar()

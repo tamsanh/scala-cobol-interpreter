@@ -3,12 +3,15 @@ package com.tam.cobol_interpreter.test.parser
 import com.tam.cobol_interpreter.context.ParseContext
 import com.tam.cobol_interpreter.parser.strategy.{CharStrategy, Comp3Strategy, FillStrategy, IntStrategy}
 import com.tam.cobol_interpreter.test.resource.ParseContextResource
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/2/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestParseStrategy extends FlatSpec {
 
   "An IntStrategy" should "parse an integer" in {

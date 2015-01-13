@@ -7,12 +7,15 @@ import com.tam.cobol_interpreter.parser.schema.expressions._
 import com.tam.cobol_interpreter.parser.schema.{ParserSchema, ParserSchemaFactory}
 import com.tam.cobol_interpreter.test.resource.ParseContextResource
 import com.tam.cobol_interpreter.tools.ByteArrayTool
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created by tamu on 1/4/15.
  */
+@RunWith(classOf[JUnitRunner])
 class TestParserSchema extends FlatSpec {
   "SchemaFactory" should "generate a schema based on a string" in {
     val schema = ParserSchemaFactory.createSchema(
