@@ -67,7 +67,13 @@ class ParserSchema(expressionList: Array[ParserSchemaExpression]){
   }
 
   // if(!isSizeAccurate) throw new SchemaException(s"Actual Size [$actualSize] does not equal RowByte Size [$rowByteSize]")
-  if(!isSizeAccurate) System.err.println(s"ParseSchema Issue: Actual Size [$actualSize] does not equal RowByte Size [$rowByteSize]")
+  if(!isSizeAccurate)
+    System.err.println(
+      if(fitWithFill)
+        s"ParseSchema Issue: Actual Size [$actualSize] does not equal RowByte Size [$rowByteSize]. Will Pad with Filler."
+      else
+        s"ParseSchema Issue: Actual Size [$actualSize] does not equal RowByte Size [$rowByteSize]."
+    )
 }
 
 object ParserSchema {
