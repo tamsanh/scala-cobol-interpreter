@@ -33,16 +33,19 @@ object Interpreter{
         val parserSchemaFile = new File(args(0))
         val writerSchemaFile = new File(args(1))
         val interpreter = InterpreterFactory.createInterpreter(parserSchemaFile, writerSchemaFile)
+        interpreter.setWriteHeader(true)
         interpreter.interpret(System.in, System.out)
       case 4 =>
         val parserSchemaFile = new File(args(0))
         val writerSchemaFile = new File(args(1))
         val interpreter = InterpreterFactory.createInterpreter(parserSchemaFile, writerSchemaFile)
+        interpreter.setWriteHeader(true)
         interpreter.interpret(new FileInputStream(args(2)), new FileOutputStream(args(3)))
       case 3 =>
         val parserSchemaFile = new File(args(0))
         val writerSchemaFile = new File(args(1))
         val interpreter = InterpreterFactory.createInterpreter(parserSchemaFile, writerSchemaFile)
+        interpreter.setWriteHeader(true)
         interpreter.interpret(new FileInputStream(args(2)), System.out)
       case _ =>
         val usage =
