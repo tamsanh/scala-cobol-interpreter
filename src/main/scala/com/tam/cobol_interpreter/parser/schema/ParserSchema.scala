@@ -37,7 +37,7 @@ class ParserSchema(expressionList: Array[ParserSchemaExpression]){
       ParserSchema.recBuild(parseContext, parseBranchBuilder, this.expressionList)
       parseBranchBuilder.setParseContext(parseContext)
       val branchCheckSum = this.expressionList.filter(_.isInstanceOf[RowBytes]).apply(0).bytes - parseBranchBuilder.getCurrentLength
-      if(fitWithFill)
+      if(fitWithFill && branchCheckSum > 0)
         parseBranchBuilder.addFillNode(branchCheckSum)
       parseBranchBuilder.getParseBranch
     } catch {
