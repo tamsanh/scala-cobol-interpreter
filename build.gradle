@@ -1,0 +1,50 @@
+apply plugin: "idea"
+apply plugin: 'scala'
+
+version = semverVersion()
+
+ext.sparkVersion = "1.1.0"
+ext.scalaVersion = "2.10.4"
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+
+    inheritOutputDirs = true
+}
+
+ptpublish {
+    includeVersionInArtifactName = true
+}
+
+pteclipse {
+    useFastCache()
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    maven {
+        url "https://repository.cloudera.com/artifactory/cloudera-repos/"
+    }
+}
+
+
+tasks.withType(ScalaCompile).each {
+    it.scalaCompileOptions.useAnt = false
+    it.scalaCompileOptions.useCompileDaemon = true
+}
+
+dependencies {
+    compile "org.scala-lang:jline:${scalaVersion}"
+    compile "org.scala-lang:scala-library:${scalaVersion}"
+
+    testCompile 'org.scalatest:scalatest_2.10:2.2.0'
+    testCompile 'junit:junit:4.11'
+}
+
+apply plugin: 'application'
+mainClassName = 'com.tam.cobol_interpreter.Interpreter'
