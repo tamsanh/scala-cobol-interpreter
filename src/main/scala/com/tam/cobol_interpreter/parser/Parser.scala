@@ -16,7 +16,7 @@ class Parser(schema:ParserSchema, fileToParse:InputStream) extends java.util.Ite
   var totalBytesRead = 0
 
   override def next(): DataContext = {
-    val parseContext = new ParseContext(schema.size)
+    val parseContext = new ParseContext(schema.rowByteSize)
     totalBytesRead += parseContext.read(fileToParse)
     val parseBranchBuilder = new StandardParseBranchBuilder()
     try {
